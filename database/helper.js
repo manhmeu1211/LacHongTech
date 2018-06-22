@@ -59,7 +59,7 @@ function updateUser(id, name, address, username, password, mail, callback){
         .input('Name', sql.VarChar(150), name)
         .input('Diachi', sql.VarChar(200), address)
         .input('mail', sql.VarChar(200), mail)
-        .query(`update * from Nhanvien where @id = $ID`)
+        .execute('usp_User_Bach_UpdateUser')
         .then(result => {
             callback(result.recordset);
         }).catch(err => {
