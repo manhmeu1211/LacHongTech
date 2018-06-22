@@ -1,6 +1,6 @@
 const userRouter = require('express').Router();
-const {login,addUser,getAlluser,deleteUser,updateUser} = require('../database/helper');
-const {getToken,verifyToken}=require('../utils');
+const {login, addUser, getAlluser, deleteUser, updateUser} = require('../database/helper');
+const {getToken, verifyToken} = require('../utils');
 
 
 userRouter.post('/login', (req, res) => {
@@ -12,7 +12,7 @@ userRouter.post('/login', (req, res) => {
         else {
             let user = data[0];
             user.status = true;
-            user.Token=verifyToken(user);
+            user.Token = verifyToken(user);
             res.send(user);
         }
     })
@@ -20,8 +20,8 @@ userRouter.post('/login', (req, res) => {
 
 userRouter.post('/addUser', (req, res) => {
     let {username, password, name, address, mail} = req.body;
-    if(!username || !password || !name) {
-    console.log("Err")
+    if (!username || !password || !name) {
+        console.log("Err")
     }
     else {
         addUser(username, password, name, address, mail, (data) => {
@@ -31,12 +31,12 @@ userRouter.post('/addUser', (req, res) => {
 });
 
 userRouter.get('/getAlluser', (req, res) => {
-    getAlluser( (data)=>{
+    getAlluser((data) => {
         res.send(data)
     })
 })
 
-userRouter.post('/deleteUser' , (req, res) => {
+userRouter.post('/deleteUser', (req, res) => {
     deleteUser((data) => {
         res.send(data)
     })
@@ -44,14 +44,21 @@ userRouter.post('/deleteUser' , (req, res) => {
 
 userRouter.post('/updateUser', (req, res) => {
     let {ID, username, password, name, address, mail} = req.body;
-    if (!ID || !username || !password || !name ) {
-        console.log("Err")
-    }
-    else {
-        updateUser( username, password, name, address, mail, (data) => {
-            res.send(data)
+    if (!ID || !username || !password || !name) {
+        console.log("Err");
+        res.send({
+            status: false,
+            msg: "deo dc"
         })
     }
-    });
+    else {
+        updateUser(username, password, name, address, mail, (data) => {
+            res.send({
+                status: true,
+                msg: "ddc roi dcmm"
+            })
+        })
+    }
+});
 
 module.exports = userRouter;
