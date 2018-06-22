@@ -1,6 +1,6 @@
 const commentRouter = require('express').Router();
-const {addComments,removeComments} = require('../database/helper');
-const {getToken,verifyToken}=require('../utils');
+const {addComments, removeComments} = require('../database/helper');
+const {getToken, verifyToken} = require('../utils');
 
 commentRouter.post('/addComments', (req, res) => {
     let {Comment} = req.body;

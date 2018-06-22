@@ -5,7 +5,7 @@ const dbConfig = {
     "user": "dev_teamthuctap",
     "password": "12054kdsg",
     "port": 25433
-  };
+};
 
 module.exports = mssql.connect(dbConfig, function (err) {
     if (err)

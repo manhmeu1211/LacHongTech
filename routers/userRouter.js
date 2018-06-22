@@ -57,14 +57,14 @@ userRouter.post('/updateUser', (req, res) => {
         console.log("Err");
         res.send({
             status: false,
-            msg: "deo dc"
+            msg: "Update Không thành công"
         })
     }
     else {
         updateUser(ID, username, password, name, address, mail, (data) => {
             res.send({
                 status: true,
-                msg: "ddc roi dcmm"
+                msg: "Update Thành công"
             })
         })
     }
