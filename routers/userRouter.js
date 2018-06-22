@@ -37,11 +37,20 @@ userRouter.get('/getAlluser', (req, res) => {
 })
 
 userRouter.post('/deleteUser', (req, res) => {
-    deleteUser((data) => {
-        res.send(data)
-    })
+    let {ID} = req.body;
+    if (!ID) {
+        res.send({
+            status: false
+        })
+    }
+    else {
+        deleteUser(ID, (data) => {
+            res.send({
+                status: true
+            })
+        })
+    }
 })
-
 userRouter.post('/updateUser', (req, res) => {
     let {ID, username, password, name, address, mail} = req.body;
     if (!ID || !username || !password || !name) {

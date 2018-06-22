@@ -41,7 +41,7 @@ function getAlluser(callback){
 
 function deleteUser(ID, callback){
     pool.request()
-        .input('ID ', sql.Int , ID)
+        .input('ID', sql.Int , ID)
         .execute('usp_User_Bach_Delete')
         .then(result => {
             callback(true);
