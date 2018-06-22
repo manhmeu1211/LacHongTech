@@ -19,8 +19,6 @@ userRouter.post('/login', (req, res) => {
 });
 
 userRouter.post('/addUser', (req, res) => {
-    //
-
     let {username, password, name, address, mail} = req.body;
     if(!username || !password || !name) {
     console.log("Err")
@@ -33,23 +31,15 @@ userRouter.post('/addUser', (req, res) => {
 });
 
 userRouter.get('/getAlluser', (req, res) => {
-
-    getAlluser((data)=>{
+    getAlluser( (data)=>{
         res.send(data)
     })
 })
 
 userRouter.post('/deleteUser' , (req, res) => {
-    let {ID , IsDelete, IsAdmin } = req.body;
-    if(!ID){
-        console.log("Err")
-    }
-    else {
-        IsDelete = 1
-        deleteUser(ID, (data) => {
-            res.send(data)
-        })
-    }
+    deleteUser((data) => {
+        res.send(data)
+    })
 })
 
 userRouter.post('/updateUser', (req, res) => {
@@ -58,7 +48,7 @@ userRouter.post('/updateUser', (req, res) => {
         console.log("Err")
     }
     else {
-        updateUser(ID, username, password, name, address, mail, (data) => {
+        updateUser( username, password, name, address, mail, (data) => {
             res.send(data)
         })
     }

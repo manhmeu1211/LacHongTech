@@ -39,26 +39,27 @@ function getAlluser(callback){
     })
 }
 
-function deleteUser(ID, IsDelete, IsAdmin, callback){
+function deleteUser(ID, callback){
     pool.request()
-        .input("ID" , sql.VarChar(50) , ID)
+        .input('ID ', sql.Int , ID)
         .execute('usp_User_Bach_Delete')
         .then(result => {
-        callback(result.recordset);
-    }).catch(err => {
-        console.log(err)
+            callback(true);
+        }).catch(err => {
+            console.log(err)
+            callback(false)
     })
 }
 
 function updateUser(id, name, address, username, password, mail, callback){
     pool.request()
-        .input('ID', sql.VarChar(150), ID)
+        .input('ID', sql.Int, ID)
         .input('Username', sql.VarChar(150), username)
         .input('PassWord', sql.VarChar(150), password)
         .input('Name', sql.VarChar(150), name)
         .input('Diachi', sql.VarChar(200), address)
         .input('mail', sql.VarChar(200), mail)
-        .execute('usp_User_Bach_UpdateUser')
+        .query(`update * from Nhanvien where @id = $ID`)
         .then(result => {
             callback(result.recordset);
         }).catch(err => {
