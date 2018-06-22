@@ -61,7 +61,7 @@ userRouter.post('/updateUser', (req, res) => {
         })
     }
     else {
-        updateUser(username, password, name, address, mail, (data) => {
+        updateUser(ID, username, password, name, address, mail, (data) => {
             res.send({
                 status: true,
                 msg: "ddc roi dcmm"

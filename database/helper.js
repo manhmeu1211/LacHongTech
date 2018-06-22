@@ -51,7 +51,7 @@ function deleteUser(ID, callback){
     })
 }
 
-function updateUser(id, name, address, username, password, mail, callback){
+function updateUser(ID, name, address, username, password, mail, callback){
     pool.request()
         .input('ID', sql.Int, ID)
         .input('Username', sql.VarChar(150), username)
@@ -61,9 +61,10 @@ function updateUser(id, name, address, username, password, mail, callback){
         .input('mail', sql.VarChar(200), mail)
         .execute('usp_User_Bach_UpdateUser')
         .then(result => {
-            callback(result.recordset);
+            callback(true);
         }).catch(err => {
-        console.log(err)
+            console.log(err)
+            callback(false);
     })
 }
 
