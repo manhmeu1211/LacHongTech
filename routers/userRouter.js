@@ -1,9 +1,7 @@
-const userRouter = require('express').Router();
-const {login, addUser, getAlluser, deleteUser, updateUser} = require('../database/helper');
+const router = require('express').Router();
 const {getToken, verifyToken} = require('../utils');
-
-
-userRouter.post('/login', (req, res) => {
+const {login, getAlluser,addUser} = require('../helper')
+router.post('/login', (req, res) => {
     let {username, password} = req.body;
     login(username, password, (data) => {
         if (data.length === 0) {
@@ -12,62 +10,40 @@ userRouter.post('/login', (req, res) => {
         else {
             let user = data[0];
             user.status = true;
-            user.Token = verifyToken(user);
+            user.Token = getToken(user);
             res.send(user);
         }
     })
 });
-
-userRouter.post('/addUser', (req, res) => {
-    let {username, password, name, address, mail} = req.body;
-    if (!username || !password || !name) {
-        console.log("Err")
-    }
-    else {
-        addUser(username, password, name, address, mail, (data) => {
-            res.send(data)
-        })
-    }
-});
-
-userRouter.get('/getAlluser', (req, res) => {
+router.get('/getAll', (req, res) => {
+    let obj = verifyToken(req.headers.token)
+    //console.log(obj)
     getAlluser((data) => {
         res.send(data)
     })
-})
-
-userRouter.post('/deleteUser', (req, res) => {
-    let {ID} = req.body;
-    if (!ID) {
+});
+router.post('/addUser', (req, res) => {
+    let user = verifyToken(req.headers.token);
+    console.log(req.body);
+    if (!user.IsAdmin) {
         res.send({
-            status: false
-        })
-    }
-    else {
-        deleteUser(ID, (data) => {
-            res.send({
-                status: true
-            })
-        })
-    }
-})
-userRouter.post('/updateUser', (req, res) => {
-    let {ID, username, password, name, address, mail} = req.body;
-    if (!ID || !username || !password || !name) {
-        console.log("Err");
-        res.send({
-            status: false,
-            msg: "Update Không thành công"
-        })
-    }
-    else {
-        updateUser(ID, username, password, name, address, mail, (data) => {
-            res.send({
-                status: true,
-                msg: "Update Thành công"
-            })
+            Status: false,
+            Message: "Không có quyền admin"
+        });
+    } else {
+        addUser(req.body,(isAdd)=>{
+            if(isAdd){
+                res.send({
+                    Status: true,
+                    Message: "Thêm nhân viên thành công"
+                });
+            }else {
+                res.send({
+                    Status: false,
+                    Message: "Username đã tồn tại,thử lại với username khác"
+                });
+            }
         })
     }
 });
-
-module.exports = userRouter;
+module.exports = router;
