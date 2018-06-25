@@ -44,7 +44,29 @@ function addUser(user, callback) {
         }).catch(err => {
     })
 }
+function editUser(user, callback) {
+    let {Username, Password, Name, DiaChi, Mail, IsAdmin, NgaySinh, GioiTinh, SoDienThoai,ID} = user;
+    Password = md5(Password);
+    pool.request()
+        .input('Username', sql.VarChar(150), Username)
+        .input('ID', sql.Int, ID)
+        .input('PassWord', sql.VarChar(150), Password)
+        .input('Name', sql.NVarChar(250), Name)
+        .input('Diachi', sql.NVarChar(200), DiaChi)
+        .input('mail', sql.VarChar(200), Mail)
+        .input('Gioitinh', sql.Bit, GioiTinh)
+        .input('NgaySinh', sql.Date, NgaySinh)
+        .input('isAdmin', sql.Bit, IsAdmin)
+        .input('sdt', sql.VarChar(20), SoDienThoai)
+        .execute('usp_User_bach_Insert')
+        .then(result => {
+
+            callback(true)
+        }).catch(err => {
+    })
+}
+
 
 module.exports = {
-    login, getAlluser, addUser
+    login, getAlluser, addUser,editUser
 }
