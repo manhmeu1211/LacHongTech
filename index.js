@@ -23,6 +23,7 @@ app.use(session({
 }));
 app.use('/api/user', require('./routers/userRouter'));
 app.use('/api/duan', require('./routers/duanRouter'));
+app.use('/api/work', require('./routers/hangmucRouter'));
 
 app.get('/', (req, res) => {
     let token = req.session.token;

@@ -79,10 +79,11 @@ function deleteUser(user, callback) {
         console.log(err)
     })
 }
-function getAll(duan, callback) {
-    let{TenDuAn} = duan;
+
+function addDuAn(duan, callback) {
+    let {TenDuAn} = duan;
     pool.request()
-        .input('Name ', sql.NVarChar(100), TenDuAn)
+        .input('Name', sql.NVarChar(100), TenDuAn)
         .execute('usp_DuAn_Bach_Insert')
         .then(result => {
             callback(true)
@@ -91,31 +92,43 @@ function getAll(duan, callback) {
         callback(false)
     })
 }
-function add(duan, callback) {
-    let{TenDuAn} = duan;
+
+function getAllDuAn(callback) {
     pool.request()
-        .input('Name ', sql.NVarChar(100), TenDuAn)
-        .execute('usp_DuAn_Bach_Insert')
+        .execute('usp_DuAn_Bach_Select')
         .then(result => {
-            callback(true)
+            callback(result.recordset)
         }).catch(err => {
         console.log(err)
         callback(false)
     })
 }
-// function deleteDuAn(duan, callback){
-//     let{ID} = duan;
-//     pool.request()
-//         .input('ID', sql.Int, ID)
-//         .execute('')
-//         .then(result => {
-//             callback(true)
-//         }).catch(err =>{
-//             callback(false)
-//     })
-// }
+function getAllHangMuc(id,callback) {
+    pool.request()
+        .input('ID', sql.Int, id)
+        .execute('usp_Work_Bach_selectByIDDuAn')
+        .then(result => {
+            callback(result.recordset)
+        }).catch(err => {
+        console.log(err)
+        callback(false)
+    })
+}
+
+
+function deleteDuAn(duan, callback) {
+    let {ID} = duan;
+    pool.request()
+        .input('ID', sql.Int, ID)
+        .execute('')
+        .then(result => {
+            callback(true)
+        }).catch(err => {
+        callback(false)
+    })
+}
 
 
 module.exports = {
-    login, getAlluser, addUser, editUser, deleteUser, addUser
+    login, getAlluser, addUser, editUser, deleteUser, addDuAn, getAllDuAn, deleteDuAn,getAllHangMuc
 }
