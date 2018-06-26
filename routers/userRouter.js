@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {getToken, verifyToken} = require('../utils');
-const {login, getAlluser, addUser,editUser} = require('../helper')
+const {login,deleteUser, getAlluser, addUser,editUser} = require('../helper')
 router.post('/login', (req, res) => {
     let {username, password} = req.body;
     login(username, password, (data) => {
@@ -22,7 +22,7 @@ router.get('/getAll', (req, res) => {
         res.send(data)
     })
 });
-router.post('/addUser', (req, res) => {
+router.post('/add', (req, res) => {
     let user = verifyToken(req.headers.token);
     console.log(req.body);
     if (!user.IsAdmin) {
@@ -46,12 +46,11 @@ router.post('/addUser', (req, res) => {
         })
     }
 });
-router.post('/editUser', (req, res) => {
+router.post('/edit', (req, res) => {
     let user = verifyToken(req.headers.token);
     const {
         ID, Name, DiaChi, Mail, Username, Password, IsAdmin, NgaySinh, SoDienThoai, GioiTinh
     } = req.body;
-    console.log(req.body);
     if (!user.IsAdmin && user.ID !== ID) {
         res.send({
             Status: false,
@@ -65,6 +64,24 @@ router.post('/editUser', (req, res) => {
             })
         })
     }
-
+});
+router.post('/delete', (req, res) => {
+    let user = verifyToken(req.headers.token);
+    const {
+        ID, Name, DiaChi, Mail, Username, Password, IsAdmin, NgaySinh, SoDienThoai, GioiTinh
+    } = req.body;
+    if (!user.IsAdmin || user.ID === ID) {
+        res.send({
+            Status: false,
+            Messgae: "Bạn không có quyền để xóa user này!"
+        })
+    }else {
+        deleteUser(req.body,(data)=>{
+            res.send({
+                Status: true,
+                Messgae: "Thành công!"
+            })
+        })
+    }
 });
 module.exports = router;

@@ -7,3 +7,4 @@ app.listen(6789, () => {
     console.log("Ok")
 })
 app.use('/api/user', require('./routers/userRouter'));
+app.use('/api/duan', require('./routers/duanRouter'));

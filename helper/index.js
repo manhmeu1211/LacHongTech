@@ -25,11 +25,12 @@ function getAlluser(callback) {
 }
 
 function addUser(user, callback) {
-    let {Username, Password, Name, DiaChi, Mail, IsAdmin, NgaySinh, GioiTinh, SoDienThoai} = user;
+    let {Username, Password, Name, DiaChi, Mail, IsAdmin, NgaySinh, GioiTinh, SoDienThoai,ThemDuAn} = user;
     Password = md5(Password);
     pool.request()
         .input('Username', sql.VarChar(150), Username)
         .input('PassWord', sql.VarChar(150), Password)
+        .input('ThemDuAn', sql.Bit, ThemDuAn)
         .input('Name', sql.NVarChar(250), Name)
         .input('Diachi', sql.NVarChar(200), DiaChi)
         .input('mail', sql.VarChar(200), Mail)
@@ -39,18 +40,19 @@ function addUser(user, callback) {
         .input('sdt', sql.VarChar(20), SoDienThoai)
         .execute('usp_User_bach_Insert')
         .then(result => {
-            const {kq}=result.recordset[0]
+            const {kq} = result.recordset[0]
             callback(kq)
         }).catch(err => {
     })
 }
+
 function editUser(user, callback) {
-    let {Username, Password, Name, DiaChi, Mail, IsAdmin, NgaySinh, GioiTinh, SoDienThoai,ID} = user;
-    Password = md5(Password);
+    let {Username, Password, Name, DiaChi, Mail, IsAdmin, NgaySinh, GioiTinh, SoDienThoai, ID,ThemDuAn} = user;
     pool.request()
         .input('Username', sql.VarChar(150), Username)
         .input('ID', sql.Int, ID)
-        .input('PassWord', sql.VarChar(150), Password)
+        .input('PassWord', sql.VarChar(150), null)
+        .input('ThemDuAn', sql.Bit, ThemDuAn)
         .input('Name', sql.NVarChar(250), Name)
         .input('Diachi', sql.NVarChar(200), DiaChi)
         .input('mail', sql.VarChar(200), Mail)
@@ -58,15 +60,38 @@ function editUser(user, callback) {
         .input('NgaySinh', sql.Date, NgaySinh)
         .input('isAdmin', sql.Bit, IsAdmin)
         .input('sdt', sql.VarChar(20), SoDienThoai)
-        .execute('usp_User_bach_Insert')
+        .execute('usp_User_Bach_UpdateUser')
         .then(result => {
-
             callback(true)
         }).catch(err => {
+        console.log(err)
+    })
+}
+
+function deleteUser(user, callback) {
+    let {ID} = user;
+    pool.request()
+        .input('ID', sql.Int, ID)
+        .execute('usp_User_Bach_Delete')
+        .then(result => {
+            callback(true)
+        }).catch(err => {
+        console.log(err)
+    })
+}
+
+function addDuAn(name, callback) {
+    pool.request()
+        .input('Name', sql.NVarChar(100), name)
+        .execute('usp_DuAn_Bach_Insert')
+        .then(result => {
+            callback(true)
+        }).catch(err => {
+        console.log(err)
     })
 }
 
 
 module.exports = {
-    login, getAlluser, addUser,editUser
+    login, getAlluser, addUser, editUser, deleteUser,addDuAn
 }
