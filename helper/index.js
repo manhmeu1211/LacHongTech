@@ -88,10 +88,11 @@ function addDuAn(name, callback) {
             callback(true)
         }).catch(err => {
         console.log(err)
+        callback(false)
     })
 }
 
 
 module.exports = {
-    login, getAlluser, addUser, editUser, deleteUser,addDuAn
+    login, getAlluser, addUser, editUser, deleteUser, addDuAn
 }

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {getToken, verifyToken} = require('../utils');
-const {login,deleteUser, getAlluser, addUser,editUser} = require('../helper')
+const {login, deleteUser, getAlluser, addUser,editUser} = require('../helper')
 router.post('/login', (req, res) => {
     let {username, password} = req.body;
     login(username, password, (data) => {

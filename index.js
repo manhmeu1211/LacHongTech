@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
-const session = require('express-session')
+
 const exphbs = require('express-handlebars');
 app.use(bodyParser.urlencoded({extended: true}));
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
@@ -13,21 +13,10 @@ app.use(bodyParser.json());
 app.listen(6789, () => {
     console.log("Ok")
 });
-app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {secure: false}
-}));
 app.use('/api/user', require('./routers/userRouter'));
 app.use('/api/duan', require('./routers/duanRouter'));
 
+
 app.get('/', (req, res) => {
-    console.log(req.session)
-    if (req.session.token) {
-        res.render('home');
-    }else {
-        res.render("login", {layout: false});
-        req.session.token="aaaaa"
-    }
+    res.render('home')
 });
