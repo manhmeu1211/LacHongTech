@@ -88,6 +88,7 @@ function addDuAn(name, callback) {
             callback(true)
         }).catch(err => {
         console.log(err)
+        callback(false)
     })
 }
 
