@@ -5,7 +5,7 @@ const app = express();
 const session = require('express-session')
 const exphbs = require('express-handlebars');
 const {verifyToken, getToken} = require('./utils');
-const {login} = require('./helper')
+const {login,getAlluser} = require('./helper')
 app.use(bodyParser.urlencoded({extended: true}));
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -40,8 +40,15 @@ app.post('/login', (req, res) => {
         if (data.length === 0) {
             res.render("login", {layout: false, username})
         } else {
-            res.render("home");
+            getAlluser(data => {
+                res.render('home',{users:data})
+            });
             req.session.token = getToken(data[0]);
         }
     })
+});
+app.get('/user', (req,res) => {
+    getAlluser(data => {
+       res.render('user',{users:data})
+    });
 });
