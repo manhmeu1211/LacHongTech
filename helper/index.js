@@ -79,10 +79,10 @@ function deleteUser(user, callback) {
         console.log(err)
     })
 }
-
-function addDuAn(name, callback) {
+function getAll(duan, callback) {
+    let{TenDuAn} = duan;
     pool.request()
-        .input('Name', sql.NVarChar(100), name)
+        .input('Name ', sql.NVarChar(100), TenDuAn)
         .execute('usp_DuAn_Bach_Insert')
         .then(result => {
             callback(true)
@@ -91,8 +91,31 @@ function addDuAn(name, callback) {
         callback(false)
     })
 }
+function add(duan, callback) {
+    let{TenDuAn} = duan;
+    pool.request()
+        .input('Name ', sql.NVarChar(100), TenDuAn)
+        .execute('usp_DuAn_Bach_Insert')
+        .then(result => {
+            callback(true)
+        }).catch(err => {
+        console.log(err)
+        callback(false)
+    })
+}
+// function deleteDuAn(duan, callback){
+//     let{ID} = duan;
+//     pool.request()
+//         .input('ID', sql.Int, ID)
+//         .execute('')
+//         .then(result => {
+//             callback(true)
+//         }).catch(err =>{
+//             callback(false)
+//     })
+// }
 
 
 module.exports = {
-    login, getAlluser, addUser, editUser, deleteUser, addDuAn
+    login, getAlluser, addUser, editUser, deleteUser, addUser
 }
