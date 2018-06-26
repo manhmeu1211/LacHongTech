@@ -12,80 +12,28 @@
 <div class="login">
     <form id="form1" method="post" action="api/login">
         <div class="hidden">
-            <!-- các control hidden để vào đây -->
         </div>
         <div class="image">
-            <img id="image1" src="images/logo.png" alt="Logo" height="100px">
+            <img id="image1" src="images/logo-64.png" alt="Logo" height="100px">
         </div>
         <div class="control">
-            <input name="macongty" class="langinput" key="macongty" type="text" id="txtmacongty" value="{{macongty}}"
-                   placeholder="Mã công ty"
+            <input name="username" type="text" id="txtusername" value="{{username}}" placeholder="Tên đăng nhập"
                    required="required">
-            <input name="username" class="langinput" key="tendangnhap" type="text" id="txtusername" value="{{username}}"
-                   placeholder="Tên đăng nhập"
-                   required="required">
-            <input name="password" class="langinput" key="matkhau" type="password" id="txtpassword"
-                   placeholder="Mật khẩu" required="required">
-            <input name="lang" id="lang" hidden>
-            <input type="submit" value="Đăng nhập" key="dangnhap" id="btnLogin"
-                   class="lang btn btn-primary btn-block btn-large">
+            <input name="password" type="password" id="txtpassword" placeholder="Mật khẩu" required="required">
+            <input type="submit" value="Đăng nhập" id="btnLogin" class="btn btn-primary btn-block btn-large">
         </div>
         <br>
         <div id="divError" style="color: white">{{txtErr}}</div>
-        <br>
-        <div class="selectContainer inner-addon left-addon">
-            <i class="fa fa-home" aria-hidden="true"></i>
-            <select id="cboLanguage" class="form-control" id="cboLanguage"
-                    style="color: white; background: rgba(0, 0, 0, 0.3); font-size:13px">
-                <option value="vi">Tiếng Việt</option>
-                <option value="en">English</option>
-            </select>
-        </div>
     </form>
 </div>
 <div>
-    <img id="image1" class="copyright_pic" src="images/logo-64.png" alt="Logo">
     <div class="copyright">
         COPYRIGHT © LAC HONG TECH., JSC . ALL RIGHTS RESERVED.
     </div>
 </div>
 <script>
-    $('#form1').on('submit', function (e) {
-        localStorage.setItem("mact", $('#txtmacongty').val());
-        localStorage.setItem("language", $('#cboLanguage option').filter(':selected').val());
-        $('#lang').val($('#cboLanguage option').filter(':selected').val());
-    });
-
-    $('select').on('change', function () {
-        if (typeof(Storage) !== "undefined") {
-            localStorage.setItem("language", $('#cboLanguage option').filter(':selected').val());
-            var lang = localStorage.language;
-            $("#cboLanguage").val('en');
-            $('.lang').each(function (index, element) {
-                $(this).attr('value', arrLang[lang][$(this).attr('key')])
-            })
-            $('.langinput').each(function (index, element) {
-                $(this).attr('placeholder', arrLang[lang][$(this).attr('key')])
-            })
-        } else {
-            localStorage.setItem("language", "vi");
-        }
-    })
-
-    var arrLang = {
-        'en': {
-            'macongty': 'Company Code',
-            'tendangnhap': 'Username',
-            'matkhau': 'Password',
-            'dangnhap': 'Login'
-        },
-        'vi': {
-            'macongty': 'Mã công ty',
-            'tendangnhap': 'Tên đăng nhập',
-            'matkhau': 'Mật khẩu',
-            'dangnhap': 'Đăng nhập'
-        }
-    }
+    $('#txtusername').val("");
+    $('#txtpassword').val("");
 </script>
 </body>
 </html>
