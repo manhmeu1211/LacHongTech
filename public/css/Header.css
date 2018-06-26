@@ -1,0 +1,252 @@
+#header-logo, #page-header {
+    display: block;
+    height: 78px;
+}
+
+#header-logo {
+    width: 260px;
+    text-align: left;
+    font-size: 16px;
+    float: left;
+    position: relative;
+    padding-left: 20px;
+}
+
+.circle {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.inner-addon {
+    position: relative;
+}
+
+.margin-left5 {
+    margin-left: 5px;
+}
+
+#header-logo img {
+    height: 75px;
+}
+
+.dataTables_filter {
+    display: none;
+}
+
+#page-header #close-sidebar {
+    color: rgba(255, 255, 255, 0.5);
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -12px;
+    height: 24px;
+    line-height: 24px;
+    width: 24px;
+    display: block;
+    border-radius: 3px;
+    text-align: center;
+}
+
+#page-header #close-sidebar:hover {
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#page-header #close-sidebar .fa {
+    display: block;
+    height: 24px;
+    line-height: 24px;
+    width: 24px;
+    background-color: transparent;
+}
+
+#header-nav-left {
+    float: left;
+    margin: 0 15px;
+}
+
+#page-header .user-account-btn {
+    float: left;
+    margin: 23px 0 0;
+}
+
+#page-header .user-account-btn > a.user-profile {
+    color: #fff;
+}
+
+#page-header .user-account-btn > a.user-profile {
+    height: 28px;
+    line-height: 28px;
+    display: block;
+}
+
+#imgProfile {
+    width: 28px;
+}
+
+.user-account-btn img {
+    border-radius: 50px;
+    float: left;
+    margin-right: 5px;
+    border: 0 none;
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+#page-header .user-account-btn > a.user-profile span {
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+
+#page-header .user-account-btn > a.user-profile span {
+    margin-right: 10px;
+    float: left;
+    width: 96px;
+}
+
+#page-header .user-account-btn > a.user-profile .fa {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    width: 28px;
+    line-height: 28px;
+    height: 28px;
+    float: right;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+#page-header .user-account-btn .dropdown-menu {
+    padding-bottom: 0;
+    top: 39px;
+    left: -12px;
+}
+
+#page-header .btn.btn-custom {
+    font-family: inherit;
+    font-size: 12px;
+    line-height: 1.42857143;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+#page-header .btn-custom.btn-primary {
+    width: 100%;
+    color: #fff;
+    background: #00bca4;
+    height: 34px;
+    font-size: 12px;
+    border: none;
+}
+
+#page-header .btn-custom.btn-danger {
+    width: 100%;
+    color: #fff;
+    border-color: #cf4436;
+    background: #e74c3c;
+    height: 34px;
+    font-size: 12px;
+    border: none;
+}
+
+.button-pane {
+    border-color: #dfe8f1;
+    border-top-color: rgb(223, 232, 241);
+    border-right-color: rgb(223, 232, 241);
+    border-bottom-color: rgb(223, 232, 241);
+    border-left-color: rgb(223, 232, 241);
+}
+
+.pad5A.button-pane.button-pane-alt {
+    padding: 5px;
+}
+
+.nav-divider, .divider, .timeline-horizontal.timeline-box:before {
+    background: #dfe8f1;
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat-x: initial;
+    background-repeat-y: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: rgb(223, 232, 241);
+}
+
+.user-info p {
+    margin: 0px;
+    font-size: 12px;
+}
+
+#header-nav-info {
+    color: #fff;
+    padding-top: 28px;
+    float: left !important;
+}
+
+#header-nav-right {
+    float: right;
+    margin: 15px 20px 0 0;
+}
+
+#header-nav-right a.hdr-btn {
+    float: left;
+    height: 28px;
+    line-height: 28px;
+    display: block;
+    width: 28px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+    margin: 8px 10px 0 0;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#header-nav-right a.hdr-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+#header-nav-right .header-btn, #header-nav-right .dropdown > a {
+    border: transparent solid 2px;
+    border-radius: 4px;
+    width: 45px;
+    height: 45px;
+    line-height: 43px;
+    display: block;
+    text-align: center;
+    position: relative;
+    background-color: transparent;
+}
+
+#header-nav-right .header-btn, #header-nav-right > .dropdown {
+    margin: 0 0 0 5px;
+    float: left;
+}
+
+#header-nav-right .header-btn:hover, #header-nav-right .dropdown > a:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+#header-nav-right .header-btn .fa, #header-nav-right .dropdown > a .fa {
+    text-align: center;
+    font-size: 21px;
+    color: rgba(255, 255, 255, 0.7);
+    padding-top: 10px;
+}
+
+#header-nav-right .header-btn, #header-nav-right .dropdown > a {
+    border-color: rgba(255, 255, 255, 0.2);
+    border-top-style: solid;
+    border-top-width: 2px;
+}
+
+;

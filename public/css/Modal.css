@@ -1,0 +1,39 @@
+div.modal h2 {
+    font-size: 22px;
+    text-transform: uppercase;
+    padding: 0;
+    font-weight: 300;
+    margin: 0;
+    color: #414C59;
+}
+
+div.modal .modal-header {
+    padding-bottom: 0;
+}
+
+div.modal .modal-body {
+    height: 515px;
+    padding: 0 0 10px 20px;
+}
+
+div.modal .modal-footer {
+    text-align: center;
+}
+
+div.modal .form-group {
+    margin-bottom: 0px;
+}
+
+div.modal label.control-label {
+    text-align: left;
+}
+
+div.modal .inner-addon i.fa {
+    font-size: 15px;
+}
+
+div.modal button.btn {
+    font-size: 14px;
+}
+
+;

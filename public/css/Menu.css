@@ -1,0 +1,177 @@
+#page-sidebar {
+    width: 19%;
+    float: left;
+    position: relative;
+    margin-right: -100%;
+    z-index: 160;
+    height: 200px;
+    min-height: 1000px;
+    max-height: 1810px;
+}
+
+.menu-content {
+    height: 1022px;
+}
+
+#sidebar-menu {
+    min-width: 200px;
+    max-height: 600px;
+    overflow: auto;
+    margin: 0;
+    padding: 5px 20px;
+    list-style: none;
+}
+
+#page-sidebar.font-inverse div.header {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+#sidebar-menu div.header {
+    text-transform: uppercase;
+    font-size: 12px;
+    padding: 5px 0;
+    font-weight: 700;
+}
+
+#sidebar-menu div {
+    position: relative;
+    margin: 2px 0;
+}
+
+#sidebar-menu div.panel.panel-default {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+}
+
+#page-sidebar.font-inverse #sidebar-menu div a {
+    color: rgba(255, 255, 255, 0.62);
+}
+
+#page-sidebar.font-inverse #sidebar-menu div a:hover {
+    color: rgba(255, 255, 255, 0.96);
+    border-color: rgba(255, 255, 255, 0.26);
+}
+
+#sidebar-menu div a {
+    display: block;
+    position: relative;
+    line-height: 32px;
+    height: 32px;
+}
+
+#sidebar-menu > div > a {
+    padding: 0 10px 0 0;
+    border-radius: 3px;
+    font-size: 12px;
+    border: transparent solid 1px;
+    line-height: 35px;
+    height: 36px;
+}
+
+#page-sidebar div a .fa {
+    color: rgba(255, 255, 255, 0.8);
+    opacity: .60;
+    -moz-opacity: .60;
+    filter: alpha(opacity:60);
+}
+
+#page-sidebar div ul li a:before, #page-sidebar div a .fa {
+    font-size: 18px;
+    line-height: 35px;
+    display: block;
+    float: left;
+    width: 30px;
+    height: 36px;
+    margin-right: 5px;
+    margin-left: 5px;
+    text-align: center;
+    opacity: .30;
+    -moz-opacity: .30;
+    filter: alpha(opacity:30);
+}
+
+#sidebar-menu div .sidebar-submenu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#page-sidebar.font-inverse #sidebar-menu div .sidebar-submenu {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+#sidebar-menu div .sidebar-submenu {
+    padding: 0;
+    width: 100%;
+    margin: 10px 0;
+    list-style: none;
+    border: transparent solid 1px;
+    border-radius: 3px;
+}
+
+#page-sidebar.font-inverse #sidebar-menu div .sidebar-submenu ul li {
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+#page-sidebar.font-inverse #sidebar-menu div .sidebar-submenu ul li a:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+#sidebar-menu div .sidebar-submenu ul li {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    margin: 0;
+}
+
+#sidebar-menu div ul li:first-child, #sidebar-menu div ul li:first-child a {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+#sidebar-menu div .sidebar-submenu ul li a:hover, #sidebar-menu div .sidebar-submenu ul li a.sfActive {
+    background: #75A8DB;
+}
+
+#sidebar-menu li .sidebar-submenu ul li a.sfActive {
+    color: #1c82e1;
+}
+
+.fc-icon, #page-sidebar div ul li a:before, #page-sidebar div a.sf-with-ul:after, .fa:before, .ui-icon:before {
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    background: none;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#page-sidebar div ul li a:before, .icon-circle:before {
+    content: "\f111";
+}
+
+#page-sidebar div ul li a:before {
+    font-size: 8px;
+    width: 18px;
+    margin: 0 3px 0 4px;
+    height: 32px;
+    line-height: 32px;
+}
+
+#page-sidebar div a.sf-with-ul:after {
+    font-size: 18px;
+    float: right;
+    content: "\f107";
+}
+
+#page-sidebar div a.sf-with-ul.collapsed:after {
+    font-size: 18px;
+    float: right;
+    content: "\f105";
+}
+
+;

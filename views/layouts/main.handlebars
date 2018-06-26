@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>TODA MONITOR</title>
+    <link rel="shortcut icon" href="images/logo.png">
+    <link rel="stylesheet" href="css/Lib/bootstrap.min.css">
+    <link rel="stylesheet" href="css/Lib/font-awesome.min.css">
+    <link rel="stylesheet" href="css/Lib/sweetalert/sweetalert.css">
+    <link rel="stylesheet" type="text/css" href="css/Lib/daterangepicker.css"/>
+    <link rel="stylesheet" href="DataTables/datatables.min.css">
+    <link rel="stylesheet" href="css/Common/Common.css">
+    <link rel="stylesheet" href="css/Common/Dropdown.css">
+    <link rel="stylesheet" href="css/Common/Content-box.css">
+    <link rel="stylesheet" href="css/Common/Login-box.css">
+    <link rel="stylesheet" href="css/Body.css">
+    <link rel="stylesheet" href="css/Menu.css">
+    <link rel="stylesheet" href="css/Header.css">
+    <link rel="stylesheet" href="css/Modal.css">
+    <script type="text/javascript" src="js/Lib/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/Lib/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/Lib/jquery.table2excel.js"></script>
+    <script type="text/javascript" src="DataTables/datatables.min.js"></script>
+    <script type="text/javascript" src="DataTables/Select-1.2.5/js/dataTables.select.min.js"></script>
+    <script type="text/javascript" src="js/Lib/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="js/Lib/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="js/Lib/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="js/Header.js"></script>
+    <script type="text/javascript" src="js/Lib/moment.min.js"></script>
+    <script type="text/javascript" src="js/Lib/daterangepicker.min.js"></script>
+    <script type="text/javascript" src="js/Lib/jszip.min.js"></script>
+
+</head>
+<body>
+<div id="page-header" class="bg-gradient-1">
+
+    <div id="header-logo" class="logo-bg">
+        <a href="/"><img id="image1" src="images/logo.png" alt="Logo"></a>
+        <a id="close-sidebar" class="langtitle" key="thugonmenu" href="#" title="Thu gọn menu" data-toggle="show">
+            <i class="fa fa-angle-down"></i>
+        </a>
+    </div>
+    <div id="header-nav-left">
+        <div class="user-account-btn dropdown">
+            <a href="#" key="thongtintaikhoan" title="Thông tin tài khoản" class="langtitle user-profile clearfix"
+               data-toggle="dropdown">
+                <img id="imgProfile" src="images/location.png" alt="">
+                <span id="lblHoTen" style="width : 150px">he</span>
+                <i class="fa fa-angle-down"></i>
+            </a>
+            <div class="dropdown-menu float-left">
+                <div class="box-sm">
+                    <div class="login-box clearfix">
+                        <div class="user-img">
+                            <img src="images/logo.png" alt="">
+                        </div>
+                        <div class="user-info">
+                            <div>
+                                <span id="lblHoTen_ChiTiet">hi</span>
+                                <p id="lblFullName">de</p>
+                                <div id="aei" hidden="hidden">
+                                    <p class="lang" key="thoihansudung">Thời hạn sử dụng:</p>
+                                    <p id="LabelAEI">abc</p>
+                                </div>
+                                <i><span id="lblMaCongTy">{{MoTa}}</span></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pad5A button-pane button-pane-alt">
+                        <a id="btnChangePass" key="doimatkhau"
+                           class="lang btn display-block font-normal btn-custom btn-primary">
+                            <i class="fa fa-key"></i>
+                            Đổi mật khẩu
+                        </a>
+                    </div>
+                    <div class="pad5A button-pane button-pane-alt">
+                        <a href="logout" key="dangxuat"
+                           class="lang btn display-block font-normal btn-custom btn-danger">
+                            <i class="fa fa-power-off"></i>
+                            Đăng xuất
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="header-nav-info">
+        <span id="lblHanSuDung"><p class="lang" key="thoihansudung" style="display:inline">Thời hạn sử dụng :</p></span>
+    </div>
+    <div id="header-nav-right">
+        <a onclick="fullscreen()" href="javascript:void(0);" class="langtitle hdr-btn" key="toanbomanhinh"
+           id="fullscreen-btn"
+           title="Toàn bộ màn hình">
+            <i class="fa fa-arrows-alt"></i>
+        </a>
+        <a class="langtitle header-btn" id="logout-btn" key="dangxuat" href="logout" title="Đăng xuất">
+            <i class="fa fa-lock"></i>
+        </a>
+    </div>
+    <div id="header-page-popup"></div>
+</div>
+<div id="page-sidebar" class="bg-gradient-1 font-inverse">
+    <link rel="stylesheet" href="css/Menu.css">
+    <div class="menu-content">
+        <div id="sidebar-menu" class="sf-js-enabled sf-arrows" role="tablist" aria-multiselectable="true">
+            <div class="header"><span class="lang" key="danhmucchucnang">Danh mục chức năng</span></div>
+            <div id="divMenu1" class="panel panel-default">
+                <a class="sf-with-ul collapsed" role="button" data-toggle="collapse" data-parent="#sidebar-menu"
+                   href="#menu1" aria-expanded="false" aria-controls="menu1">
+                    <i class="fa fa-align-center"></i>
+                    <span class="lang" key="danhmuc">Danh mục</span>
+                </a>
+                <div id="menu1" class="panel-collapse collapse sidebar-submenu" role="tabpanel"
+                     aria-labelledby="menuOne">
+                    <ul id="UL">
+                        <li>
+                            <a id="menuNhanVien" href="uploadExcel">
+                                <span class="lang" key="nhanvien">Upload Excel</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a id="menuPhongBan" href="callout">
+                                <span class="lang" key="phongbanmenu"> Callout</span>
+                            </a>
+                        </li>
+                        <li id="liIVR">
+                            <a id="menuIVR" href="uploadIVR">
+                                <span class="lang" key="capnhatIVR"> Upload file IVR</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="divMenu2" class="panel panel-default">
+                <a class="sf-with-ul collapsed" role="button" data-toggle="collapse" data-parent="#sidebar-menu"
+                   href="#menu2" aria-expanded="false" aria-controls="menu2">
+                    <i class="fa fa-bell"></i>
+                    <span class="lang" key="baocao">Báo cáo</span>
+                </a>
+                <div id="menu2" class="panel-collapse collapse sidebar-submenu" role="tabpanel"
+                     aria-labelledby="menuTwo">
+                    <ul>
+                        <li>
+                            <a id="menuBaoCaoCuocGoi" href="report">
+                                <span class="lang" key="baocaocuocgoi"> Báo cáo cuộc gọi</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="page-content-wrapper" style="z-index:auto">
+    {{{body}}}
+</div>
+<div id="page-popup"></div>
+
+<div id="ChangePasswordModal" class="modal fade" role="dialog" style="top : 190px">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <form id="formPopup" class="form-horizontal">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h2 class="lang modal-title" id="title" key="doimatkhau">Đổi mật khẩu</h2>
+
+                    <div class="hidden">
+                        <input id="username" name="username" type="text" value="{{ID}}">
+                    </div>
+
+                    <div class="hidden">
+                        <input name="idqllh" type="text" value="{{ID_QLLH}}">
+                    </div>
+                </div>
+
+                <div class="modal-body" style="height: 185px">
+                    <div class="form-group col-xs-12">
+                        <label for="txtOldPassword" class="lang control-label" key="matkhaucu">Mật khẩu cũ <span
+                                class="require">(*)</span></label>
+                        <div class="inner-addon left-addon">
+                            <i class="fa fa-circle-o" aria-hidden="true"></i>
+                            <input name="oldPassword" type="password" class="langinput form-control" key="matkhaucu"
+                                   id="txtOldPassword"
+                                   placeholder="Mật khẩu cũ">
+                            <small style="margin-left: 2px;color: red" id="smallOldPass"></small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-12">
+                        <label for="txtNewPassword" class="lang control-label" key="matkhaumoi">Mật khẩu mới <span
+                                class="require">(*)</span></label>
+                        <div class="inner-addon left-addon">
+                            <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                            <input name="newPassword" type="password" class="langinput form-control" key="matkhaumoi"
+                                   id="txtNewPassword"
+                                   placeholder="Mật khẩu mới">
+                            <small style="margin-left: 2px;color: red" id="smallNewPass"></small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-12">
+                        <label for="txtNewPasswordConfirm" class="lang control-label" key="nhaclaimatkhau">Nhắc lại mật
+                            khẩu mới <span
+                                    class="require">(*)</span></label>
+                        <div class="inner-addon left-addon">
+                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                            <input name="rePassword" type="password" class="langinput form-control" key="nhaclaimatkhau"
+                                   id="txtNewPasswordConfirm"
+                                   placeholder="Nhắc lại mật khẩu mới">
+                            <small style="margin-left: 2px;color: red" id="smallRePass"></small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="lang langtitle btn btn-primary" key="doimatkhau" id="btnChangePassword"
+                            data-toggle="tooltip"
+                            data-placement="bottom" title="Đổi mật khẩu">
+                        Đổi mật khẩu
+                    </button>
+
+                    <button type="button" class="lang langtitle btn btn-danger" key="dong"
+                            id="btnCloseChangePasswordPopup" data-toggle="tooltip"
+                            data-placement="bottom" title="Đóng" data-dismiss="modal">Đóng
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</body>
+
+
+</html>
