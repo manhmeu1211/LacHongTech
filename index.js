@@ -2,8 +2,10 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
-const session = require('express-session')
+const session = require('express-session');
 const exphbs = require('express-handlebars');
+const {verifyToken, getToken} = require('./utils');
+const {login} = require('./helper')
 app.use(bodyParser.urlencoded({extended: true}));
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -23,11 +25,23 @@ app.use('/api/user', require('./routers/userRouter'));
 app.use('/api/duan', require('./routers/duanRouter'));
 
 app.get('/', (req, res) => {
-    console.log(req.session)
-    if (req.session.token) {
-        res.render('home');
-    }else {
-        res.render("login", {layout: false});
-        req.session.token="aaaaa"
+    let token = req.session.token;
+    let user = verifyToken(token);
+    if (user) {
+        res.render('home')
+    } else {
+        res.render('login', {layout: false});
     }
+});
+app.post('/login', (req, res) => {
+    const {username, password} = req.body;
+    login(username, password, (data) => {
+        console.log(data)
+        if (data.length === 0) {
+            res.render("login", {layout: false, username})
+        } else {
+            res.render("home");
+            req.session.token = getToken(data[0]);
+        }
+    })
 });

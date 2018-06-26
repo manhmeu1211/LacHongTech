@@ -25,7 +25,7 @@ function getAlluser(callback) {
 }
 
 function addUser(user, callback) {
-    let {Username, Password, Name, DiaChi, Mail, IsAdmin, NgaySinh, GioiTinh, SoDienThoai,ThemDuAn} = user;
+    let {Username, Password, Name, DiaChi, Mail, IsAdmin, NgaySinh, GioiTinh, SoDienThoai, ThemDuAn} = user;
     Password = md5(Password);
     pool.request()
         .input('Username', sql.VarChar(150), Username)
@@ -47,7 +47,7 @@ function addUser(user, callback) {
 }
 
 function editUser(user, callback) {
-    let {Username, Password, Name, DiaChi, Mail, IsAdmin, NgaySinh, GioiTinh, SoDienThoai, ID,ThemDuAn} = user;
+    let {Username, Password, Name, DiaChi, Mail, IsAdmin, NgaySinh, GioiTinh, SoDienThoai, ID, ThemDuAn} = user;
     pool.request()
         .input('Username', sql.VarChar(150), Username)
         .input('ID', sql.Int, ID)
@@ -93,5 +93,5 @@ function addDuAn(name, callback) {
 
 
 module.exports = {
-    login, getAlluser, addUser, editUser, deleteUser,addDuAn
+    login, getAlluser, addUser, editUser, deleteUser, addDuAn
 }
