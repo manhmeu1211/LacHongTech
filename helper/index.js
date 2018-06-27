@@ -103,12 +103,35 @@ function getAllDuAn(callback) {
         callback(false)
     })
 }
-function getAllHangMuc(id,callback) {
+
+function getAllHangMuc(id, callback) {
     pool.request()
         .input('ID', sql.Int, id)
         .execute('usp_Work_Bach_selectByIDDuAn')
         .then(result => {
             callback(result.recordset)
+        }).catch(err => {
+        console.log(err)
+        callback(false)
+    })
+}
+
+function getAllTrangThaiCongViecConfig(callback) {
+    pool.request()
+        .execute('usp_TrangThaiCongViec_Bach_selectTrangThaiCongViec')
+        .then(result => {
+            callback(result.recordset);
+        }).catch(err => {
+        console.log(err)
+        callback(false)
+    })
+}
+
+function getAllPhanHeConfig(callback) {
+    pool.request()
+        .execute('usp_PhanHe_Bach_selectAll')
+        .then(result => {
+            callback(result.recordset);
         }).catch(err => {
         console.log(err)
         callback(false)
@@ -130,5 +153,15 @@ function deleteDuAn(duan, callback) {
 
 
 module.exports = {
-    login, getAlluser, addUser, editUser, deleteUser, addDuAn, getAllDuAn, deleteDuAn,getAllHangMuc
+    login,
+    getAlluser,
+    addUser,
+    editUser,
+    deleteUser,
+    addDuAn,
+    getAllDuAn,
+    deleteDuAn,
+    getAllHangMuc,
+    getAllTrangThaiCongViecConfig,
+    getAllPhanHeConfig
 }

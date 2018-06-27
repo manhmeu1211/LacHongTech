@@ -12,7 +12,7 @@ app.set('view engine', 'handlebars');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
-app.listen(6789, () => {
+app.listen(6788, () => {
     console.log("Ok")
 });
 app.use(session({
@@ -24,6 +24,8 @@ app.use(session({
 app.use('/api/user', require('./routers/userRouter'));
 app.use('/api/duan', require('./routers/duanRouter'));
 app.use('/api/work', require('./routers/hangmucRouter'));
+app.use('/api/trangthai', require('./routers/trangthaiRouter'));
+app.use('/api/phanhe', require('./routers/phanheRouter'));
 
 app.get('/', (req, res) => {
     let token = req.session.token;
