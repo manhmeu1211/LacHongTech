@@ -12,8 +12,8 @@ router.post('/add', (req, res) => {
         });
     }
     else {
-        addWork(req.body, (isadd) =>{
-            if (isadd){
+        addWork(req.body, (isadd) => {
+            if (isadd) {
                 res.send({
                     Status: true,
                     Message: "Thêm thành công"
@@ -22,23 +22,44 @@ router.post('/add', (req, res) => {
             else {
                 res.send({
                     Status: false,
-                    Message : "Thêm không thành công"
+                    Message: "Thêm không thành công"
                 })
             }
         })
     }
 });
 
-    router.get('/getAll/:id', (req, res) => {
-        const id = req.params.id;
-        getAllHangMuc(id, data => {
-            res.send(data);
-        })
-    });
-
-    router.post('/delete', (req, res) =>{
-        deleteWork((data) =>{
-            res.send(data);
-        })
+router.get('/getAll/:id', (req, res) => {
+    const id = req.params.id;
+    getAllHangMuc(id, data => {
+        res.send(data);
     })
-    module.exports = router;
+});
+
+router.post('/delete', (req, res) => {
+    let user = verifyToken(req.headers.token);
+    if (!user.IsAdmin) {
+        res.send({
+            Status: false,
+            Message: "Không có quyền"
+        })
+    }
+    else {
+        deleteWork(req.body.ID, (data) => {
+            if (data) {
+                res.send({
+                    Status: true,
+                    Message: "Xóa thành công"
+                })
+            }
+            else {
+                res.send({
+                    Status: false,
+                    Message: "Xóa không thành công"
+                })
+            }
+        })
+    }
+})
+
+module.exports = router;

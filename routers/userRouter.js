@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {getToken, verifyToken} = require('../utils');
-const {login, deleteUser, getAlluser, addUser,editUser} = require('../helper')
+const {login, deleteUser, getAlluser, addUser, editUser} = require('../helper')
 router.post('/login', (req, res) => {
     let {username, password} = req.body;
     login(username, password, (data) => {
@@ -56,8 +56,8 @@ router.post('/edit', (req, res) => {
             Status: false,
             Messgae: "Bạn không có quyền để chỉnh sửa user này!"
         })
-    }else {
-        editUser(req.body,(data)=>{
+    } else {
+        editUser(req.body, (data) => {
             res.send({
                 Status: true,
                 Messgae: "Thành công!"
@@ -75,8 +75,8 @@ router.post('/delete', (req, res) => {
             Status: false,
             Messgae: "Bạn không có quyền để xóa user này!"
         })
-    }else {
-        deleteUser(req.body,(data)=>{
+    } else {
+        deleteUser(req.body, (data) => {
             res.send({
                 Status: true,
                 Messgae: "Thành công!"
