@@ -31,7 +31,7 @@ router.post('/deleteDuAn', (req, res) => {
     if (!user.IsAdmin) {
         res.send({
             Status: false,
-            Messgae: "Bạn không có quyền để xóa user này!"
+            Messgae: "Bạn không có quyền để xóa dự án này!"
         })
     }
     else {

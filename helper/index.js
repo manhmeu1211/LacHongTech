@@ -151,18 +151,6 @@ function deleteDuAn(duan, callback) {
     })
 }
 
-function insertHangMuc(hangmuc, callback) {
-    let {Deadline, Hangmuc, Mota, Ngaybatdau, Nguoithuchien, Nguoiyeucau, Phanhe, Status, TenDuAn} = hangmuc;
-    pool.request()
-        .input('ID', sql.Int, ID)
-        .execute('')
-        .then(result => {
-            callback(true)
-        }).catch(err => {
-        callback(false)
-    })
-}
-
 
 module.exports = {
     login,
