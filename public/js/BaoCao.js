@@ -90,15 +90,17 @@ $(document).ready(function () {
             cell.innerHTML = i + 1;
         });
     }).draw();
-    $.post(`report`, {
-        start: `${moment().format('YYYY-MM-DD')}T00:00:00`,
-        end: `${moment().format('YYYY-MM-DD')}T23:59:59`
-    }, function (results) {
-        console.log(results)
-        let arr = results.map((item, i) => ["", i + 1, item.Destination, moment(item.TimeCall).format("DD-MM-YYYY HH:mm:ss"), item.Status, item.Press, String(item.Duration).toHHMMSS()]);
-        example.clear().rows.add(arr).draw();
-        $('#loadSpin').css("visibility", "hidden");
-    });
+    // $.post(`report`, {
+    //     start: `${moment().format('YYYY-MM-DD')}T00:00:00`,
+    //     end: `${moment().format('YYYY-MM-DD')}T23:59:59`
+    // }, function (results) {
+    //     console.log(results)
+    //let arr = results.map((item, i) => ["", i + 1, item.Destination, moment(item.TimeCall).format("DD-MM-YYYY HH:mm:ss"), item.Status, item.Press, String(item.Duration).toHHMMSS()]);
+    // example.clear().rows.add(arr).draw();
+    let arr =[["", 1,"di","ho", "he","hi", "hu"]];
+    example.clear().rows.add(arr).draw();
+    //     $('#loadSpin').css("visibility", "hidden");
+    // });
 
     $('#daterange').daterangepicker({
         opens: 'center',
