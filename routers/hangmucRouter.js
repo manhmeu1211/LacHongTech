@@ -3,6 +3,7 @@ const {getToken, verifyToken} = require('../utils');
 const {getAllHangMuc} = require('../helper');
 router.post('/add',(req,res)=>{
     let {body}=req;
+    console.log(body)
     res.send(body);
 });
 router.get('/getAll/:id',(req,res)=>{
