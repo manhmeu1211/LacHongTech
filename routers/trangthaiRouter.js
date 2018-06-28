@@ -8,4 +8,6 @@ router.get('/getAll', (req, res) => {
         res.send(data);
     })
 });
+
+
 module.exports = router;

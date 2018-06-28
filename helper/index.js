@@ -143,7 +143,39 @@ function deleteDuAn(duan, callback) {
     let {ID} = duan;
     pool.request()
         .input('ID', sql.Int, ID)
-        .execute('')
+        .execute('usp_Work_Bach_Delete')
+        .then(result => {
+            callback(true)
+        }).catch(err => {
+        callback(false)
+    })
+}
+
+function addWork(work, callback) {
+    let {Hangmuc, Phanhe, Mota, Ngaybatdau, Deadline, Status, Nguoiyeucau, Nguoithuchien, TenDuAn} = work;
+    pool.request()
+        .input('Hangmuc', sql.NVarChar(50), Hangmuc)
+        .input('Phanhe', sql.NVarChar(50), Phanhe)
+        .input('Mota', sql.NVarChar(1000), Mota)
+        .input('Ngaybatdau', sql.Date, Ngaybatdau)
+        .input('Deadline', sql.Date, Deadline)
+        .input('Trangthai', sql.Int, Status)
+        .input('Nguoiyeucau', sql.NVarChar(150), Nguoiyeucau)
+        .input('Nguoithuchien', sql.NVarChar(150), Nguoithuchien)
+        .input('IdDuAn', sql.Int, +TenDuAn)
+        .execute('usp_Work_bach_InsertWork')
+        .then(result => {
+            callback(true)
+        }).catch(err => {
+        console.log(err)
+        callback(false)
+    })
+}
+
+function deleteWork(ID, callback) {
+    pool.request()
+        .input('ID', sql.Int, +ID)
+        .execute('usp_Work_Bach_Delete')
         .then(result => {
             callback(true)
         }).catch(err => {
@@ -163,5 +195,8 @@ module.exports = {
     deleteDuAn,
     getAllHangMuc,
     getAllTrangThaiCongViecConfig,
-    getAllPhanHeConfig
+    getAllPhanHeConfig,
+    addWork,
+    deleteWork,
+
 }
