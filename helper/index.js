@@ -116,6 +116,18 @@ function getAllHangMuc(id, callback) {
     })
 }
 
+function getHangMucById(id, callback) {
+    pool.request()
+        .input('ID', sql.Int, id)
+        .execute('usp_Work_Bach_Select')
+        .then(result => {
+            callback(result.recordset)
+        }).catch(err => {
+        console.log(err)
+        callback(false)
+    })
+}
+
 function getAllTrangThaiCongViecConfig(callback) {
     pool.request()
         .execute('usp_TrangThaiCongViec_Bach_selectTrangThaiCongViec')
@@ -183,6 +195,28 @@ function deleteWork(ID, callback) {
     })
 }
 
+function editWork(work, callback) {
+    let {ID,Hangmuc, Phanhe, Mota, Ngaybatdau, Deadline, Status, Nguoiyeucau, Nguoithuchien, TenDuAn} = work;
+    pool.request()
+        .input('Hangmuc', sql.NVarChar(50), Hangmuc)
+        .input('ID', sql.Int, ID)
+        .input('Phanhe', sql.NVarChar(50), Phanhe)
+        .input('Mota', sql.NVarChar(1000), Mota)
+        .input('Ngaybatdau', sql.Date, Ngaybatdau)
+        .input('Deadline', sql.Date, Deadline)
+        .input('Trangthai', sql.Int, Status)
+        .input('Nguoiyeucau', sql.NVarChar(150), Nguoiyeucau)
+        .input('Nguoithuchien', sql.NVarChar(150), Nguoithuchien)
+        .input('IdDuAn', sql.Int, +TenDuAn)
+        .execute('usp_Work_Bach_UpdateWork')
+        .then(result => {
+            callback(true)
+        }).catch(err => {
+        console.log(err)
+        callback(false)
+    })
+}
+
 
 module.exports = {
     login,
@@ -198,5 +232,6 @@ module.exports = {
     getAllPhanHeConfig,
     addWork,
     deleteWork,
-
+    editWork,
+    getHangMucById
 }

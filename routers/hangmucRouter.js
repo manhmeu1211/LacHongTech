@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {getToken, verifyToken} = require('../utils');
-const {getAllHangMuc, addWork, deleteWork} = require('../helper');
+const {getAllHangMuc, addWork, deleteWork,editWork,getHangMucById} = require('../helper');
 router.post('/add', (req, res) => {
     let user = verifyToken(req.headers.token);
     console.log(req.body);
@@ -36,6 +36,13 @@ router.get('/getAll/:id', (req, res) => {
     })
 });
 
+router.get('/get/:id', (req, res) => {
+    const id = req.params.id;
+    getHangMucById(id, data => {
+        res.send(data[0]||{});
+    })
+});
+
 router.post('/delete', (req, res) => {
     let user = verifyToken(req.headers.token);
     if (!user.IsAdmin) {
@@ -61,5 +68,30 @@ router.post('/delete', (req, res) => {
         })
     }
 })
-
+router.post('/edit', function (req, res) {
+    let user = verifyToken(req.headers.token);
+    console.log(req.body)
+    if (!user.IsAdmin) {
+        res.send({
+            Status: false,
+            Message: "Không có quyền"
+        })
+    }
+    else {
+        editWork(req.body, (data) => {
+            if (data) {
+                res.send({
+                    Status: true,
+                    Message: "Sửa thành công"
+                })
+            }
+            else {
+                res.send({
+                    Status: false,
+                    Message: "Sửa không thành công"
+                })
+            }
+        })
+    }
+});
 module.exports = router;

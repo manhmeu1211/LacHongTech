@@ -5,7 +5,7 @@ const app = express();
 const session = require('express-session')
 const exphbs = require('express-handlebars');
 const {verifyToken, getToken} = require('./utils');
-const {login,getAlluser,getAllDuAn,getAllHangMuc} = require('./helper')
+const {login, getAlluser, getAllDuAn, getAllHangMuc} = require('./helper')
 app.use(bodyParser.urlencoded({extended: true}));
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -44,28 +44,28 @@ app.post('/login', (req, res) => {
             res.render("login", {layout: false, username})
         } else {
             getAlluser(data => {
-                res.render('user',{users:data})
+                res.render('user', {users: data})
             });
             req.session.token = getToken(data[0]);
         }
     })
 });
-app.get('/user', (req,res) => {
+app.get('/user', (req, res) => {
     getAlluser(data => {
-       res.render('user')
+        res.render('user')
     });
 });
-app.get('/baocao', (req,res) => {
+app.get('/baocao', (req, res) => {
     res.render('baocao')
 });
-app.get('/duan', (req,res) => {
+app.get('/duan', (req, res) => {
     getAllDuAn(data => {
-       res.render('duan')
+        res.render('duan')
     });
 });
-app.get('/work', (req,res) => {
-
-    getAllHangMuc(data => {
-        res.render('conviec')
+app.get('/work', (req, res) => {
+    const id = req.query.id;
+    getAllHangMuc(id,data => {
+        res.render('congviec')
     });
 });
