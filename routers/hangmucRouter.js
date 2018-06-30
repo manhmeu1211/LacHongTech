@@ -29,20 +29,6 @@ router.post('/add', (req, res) => {
     }
 });
 
-router.get('/getAll/:id', (req, res) => {
-    const id = req.params.id;
-    getAllHangMuc(id, data => {
-        res.send(data);
-    })
-});
-
-router.get('/get/:id', (req, res) => {
-    const id = req.params.id;
-    getHangMucById(id, data => {
-        res.send(data[0]||{});
-    })
-});
-
 router.post('/delete', (req, res) => {
     let user = verifyToken(req.headers.token);
     if (!user.IsAdmin) {
@@ -68,7 +54,7 @@ router.post('/delete', (req, res) => {
         })
     }
 })
-router.post('/edit', function (req, res) {
+router.post('/edit',  (req, res) => {
     let user = verifyToken(req.headers.token);
     console.log(req.body)
     if (!user.IsAdmin) {
@@ -94,4 +80,22 @@ router.post('/edit', function (req, res) {
         })
     }
 });
+
+
+
+router.get('/getAll/:id', (req, res) => {
+    const id = req.params.id;
+    getAllHangMuc(id, data => {
+        res.send(data);
+    })
+});
+
+router.get('/get/:id', (req, res) => {
+    const id = req.params.id;
+    getHangMucById(id, data => {
+        res.send(data[0]||{});
+    })
+});
+
+
 module.exports = router;

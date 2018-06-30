@@ -217,6 +217,16 @@ function editWork(work, callback) {
     })
 }
 
+function countGhim(ID, callback){
+    pool.request()
+        .input('ID', sql.Int, +ID)
+        .execute('usp_Bach_Ghim')
+        .then(result =>{
+            callback(result.recordset)
+        }).catch(err =>{
+            console.log('Lỗi')
+    })
+}
 
 module.exports = {
     login,
@@ -233,5 +243,6 @@ module.exports = {
     addWork,
     deleteWork,
     editWork,
-    getHangMucById
+    getHangMucById,
+    countGhim
 }
