@@ -180,7 +180,7 @@ function addWork(work, callback) {
             callback(true)
         }).catch(err => {
         console.log(err)
-        callback(false)
+        callback(false);
     })
 }
 
@@ -190,6 +190,19 @@ function deleteWork(ID, callback) {
         .execute('usp_Work_Bach_Delete')
         .then(result => {
             callback(true)
+        }).catch(err => {
+        callback(false)
+    })
+}
+
+function insertDoneWork(ID, IdUser, callback) {
+    pool.request()
+        .input('ID', sql.Int, +ID)
+        .input('IdUser', sql.Int, +IdUser)
+        .execute('usp_DuAn_Bach_InsertDoneWork')
+        .then(result => {
+            console.log(result.recordset[0])
+            callback(result.recordset[0].result)
         }).catch(err => {
         callback(false)
     })
@@ -244,5 +257,6 @@ module.exports = {
     deleteWork,
     editWork,
     getHangMucById,
-    countGhim
+    countGhim,
+    insertDoneWork
 }
