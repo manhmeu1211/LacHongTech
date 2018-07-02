@@ -21,6 +21,16 @@ app.use(session({
     saveUninitialized: true,
     cookie: {secure: false}
 }));
+app.use(function (req, res, next) {
+    req.headers['if-none-match'] = '';
+    req.headers['if-modified-since'] = '';
+    if (!req.session.token && req.url !== '/' && req.url.indexOf(".") === -1 && req.url.indexOf("/api/") === -1 && req.url.indexOf("/login") === -1) {
+        res.redirect(307, '/')
+    } else {
+        next();
+    }
+});
+
 app.use('/api/user', require('./routers/userRouter'));
 app.use('/api/duan', require('./routers/duanRouter'));
 app.use('/api/work', require('./routers/hangmucRouter'));

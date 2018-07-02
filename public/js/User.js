@@ -61,8 +61,9 @@ $(document).ready(function () {
             {
                 "width": "10%",
                 "targets": 7,
-                "render": function ( data, type, row ) {
-                    return moment(data).format('DD-MM-YYYY HH:mm:ss')}
+                "render": function (data, type, row) {
+                    return moment(data).format('DD-MM-YYYY HH:mm:ss')
+                }
             },
             {
                 "width": "10%",
@@ -86,7 +87,7 @@ $(document).ready(function () {
 
     $.get('api/user/getAll', data => {
         let arr = data.map(user => {
-            return ["", user.ID, user.Name, user.DiaChi, user.Mail, user.Username, user.IsAdmin?"Có":"Không", user.NgaySinh, user.SoDienThoai, user.GioiTinh?"Nam":"Nữ", user.ThemDuAn?"Có":"Không"]
+            return ["", user.ID, user.Name, user.DiaChi, user.Mail, user.Username, user.IsAdmin ? "Có" : "Không", user.NgaySinh, user.SoDienThoai, user.GioiTinh ? "Nam" : "Nữ", user.ThemDuAn ? "Có" : "Không"]
         })
         console.log(arr)
         example.clear().rows.add(arr).draw();
@@ -98,20 +99,47 @@ $(document).ready(function () {
     $('#header th:nth-child(1)').addClass('sorting_disabled');
     $('[data-toggle="tooltip"]').tooltip();
     $('#btnAddUer').click(function (e) {
-        console.log("addd")
+        // console.log("addd")
         $('#AddEditEmployeePopup').modal();
     });
     $('#btnEditUser').click(function (e) {
         $('#type').val("edit");
-        let ids =example.rows('.selected').data();
-        console.log(ids)
-       $('#AddEditEmployeePopup').modal()
+        let ids = example.rows('.selected').data();
+        // console.log(ids)
+        $('#AddEditEmployeePopup').modal()
     });
+    $('#btnDeleteUser').click(function (e) {
+        let data = example.rows('.selected').data();
+        switch (data.length) {
+            case 0:
+                alert("Đit me chọn đi")
+                break;
+            case 1:
+                $.post('api/user/deleteUser', {
+                    ID: data[0][1]
+                }, function (data) {
+                    console.log(data)
+                    alert(data.Message)
+                    window.location.reload()
+                })
+                break;
+            default:
+                alert("Chọn lồn chọn lắm")
+        }
 
+
+        // ids.forEach(item => $.post('api/user/deleteUser', {
+        //     ID: item[1]
+        // }, function (data) {
+        //     alert(data.Message)
+        // }))
+    });
 });
+
 function initModal() {
     let now = moment().format('YYYY-MM-DD');
-    $('#page-popup').html(`<div id="AddEditEmployeePopup" class="modal fade" role="dialog">
+    $('#page-popup').html(
+        `<div id="AddEditEmployeePopup" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content" >
                 <form id="frmAddCompany" class="form-horizontal" method="post" action="api/user/addUser">
@@ -211,5 +239,8 @@ function initModal() {
                 </form>
             </div>
         </div>
-    </div>`);
-}
+    </div>`
+    );
+};
+
+

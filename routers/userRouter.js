@@ -90,8 +90,8 @@ router.post('/delete', (req, res) => {
 //web
 
 
-router.post("/addUser",(req,res)=>{
-    let user=verifyToken(req.session.token);
+router.post("/addUser", (req, res) => {
+    let user = verifyToken(req.session.token);
     if (!user.IsAdmin) {
         res.send({
             Status: false,
@@ -107,6 +107,24 @@ router.post("/addUser",(req,res)=>{
                     Message: "Username đã tồn tại,thử lại với username khác"
                 });
             }
+        })
+    }
+});
+
+router.post("/deleteUser", (req, res) => {
+    let user = verifyToken(req.session.token);
+    let {ID}=req.body;
+    if (!user.IsAdmin || user.ID === +ID) {
+        res.send({
+            Status: false,
+            Message: "Bạn không có quyền để xóa user này!"
+        })
+    } else {
+        deleteUser(req.body, (data) => {
+            res.send({
+                Status: true,
+                Message: "Xóa ok!"
+            })
         })
     }
 });
