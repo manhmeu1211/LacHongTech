@@ -25,6 +25,7 @@ router.get('/getAll', (req, res) => {
 router.post('/add', (req, res) => {
     let user = verifyToken(req.headers.token);
     console.log(req.body);
+    res.send(req.body)
     if (!user.IsAdmin) {
         res.send({
             Status: false,
@@ -81,6 +82,31 @@ router.post('/delete', (req, res) => {
                 Status: true,
                 Messgae: "Thành công!"
             })
+        })
+    }
+});
+
+
+//web
+
+
+router.post("/addUser",(req,res)=>{
+    let user=verifyToken(req.session.token);
+    if (!user.IsAdmin) {
+        res.send({
+            Status: false,
+            Message: "Không có quyền admin"
+        });
+    } else {
+        addUser(req.body, (isAdd) => {
+            if (isAdd) {
+                res.redirect('/user');
+            } else {
+                res.send({
+                    Status: false,
+                    Message: "Username đã tồn tại,thử lại với username khác"
+                });
+            }
         })
     }
 });

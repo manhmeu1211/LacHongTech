@@ -86,7 +86,7 @@ $(document).ready(function () {
 
     $.get('api/user/getAll', data => {
         let arr = data.map(user => {
-            return ["", user.ID, user.Name, user.DiaChi, user.Mail, user.Username, user.IsAdmin, user.NgaySinh, user.SoDienThoai, user.GioiTinh, user.ThemDuAn]
+            return ["", user.ID, user.Name, user.DiaChi, user.Mail, user.Username, user.IsAdmin?"Có":"Không", user.NgaySinh, user.SoDienThoai, user.GioiTinh?"Nam":"Nữ", user.ThemDuAn?"Có":"Không"]
         })
         console.log(arr)
         example.clear().rows.add(arr).draw();
@@ -98,9 +98,13 @@ $(document).ready(function () {
     $('#header th:nth-child(1)').addClass('sorting_disabled');
     $('[data-toggle="tooltip"]').tooltip();
     $('#btnAddUer').click(function (e) {
+        console.log("addd")
         $('#AddEditEmployeePopup').modal();
     });
     $('#btnEditUser').click(function (e) {
+        $('#type').val("edit");
+        let ids =example.rows('.selected').data();
+        console.log(ids)
        $('#AddEditEmployeePopup').modal()
     });
 
@@ -110,83 +114,86 @@ function initModal() {
     $('#page-popup').html(`<div id="AddEditEmployeePopup" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content" >
-                <form id="frmAddCompany" class="form-horizontal" method="post" action="router/company">
+                <form id="frmAddCompany" class="form-horizontal" method="post" action="api/user/addUser">
                 <input name="type" id="type" class="hidden" value="add">
-                <input name="mactOld" id="mactOld" class="hidden">
                     <div class="modal-header" style="border-bottom: 0px">
                         <button type="button" class="close" data-dismiss="modal"></button>
-                        <h2 id="titleModal" class="modal-title">Thêm mới công ty</h2>
+                        <h2 id="titleModal" class="modal-title">Thêm mới nhân viên</h2>
                     </div>
                     <div class="modal-body" >
                         <div class="form-group col-xs-12">
-                            <label for="txtTenCt" class="control-label" style="margin-top: 8px">Tên<span
+                            <label for="txtName" class="control-label" style="margin-top: 8px">Tên<span
                                     class="require">(*)</span></label>
                             <div class="inner-addon left-addon">
                                 <i class="fa fa-user" aria-hidden="true"></i>
-                                <input name="tenct" type="text" class="form-control" id="txtTenCt" placeholder="Tên công ty">
+                                <input name="Name" type="text" class="form-control" id="txtName" placeholder="Tên nhân viên">
                             </div>
                         </div>
                         <div class="form-group col-xs-12">
-                            <label for="txtMact" class="control-label">ID<span
+                            <label for="txtAddress" class="control-label">Địa chỉ<span
                                     class="require">(*)</span></label>
                             <div class="inner-addon left-addon">
                                 <i class="fa fa-sign-in" aria-hidden="true"></i>
-                                <input name="mact" type="text" class="form-control" id="txtMact" placeholder="Mã công ty">
+                                <input name="DiaChi" type="text" class="form-control" id="txtAddress" placeholder="Địa chỉ">
                             </div>
-                        </div>
+                        </div> 
                         <div class="form-group col-xs-12">
-                            <label for="txtSLNV" class="control-label"><span class="require">(*)</span></label>
+                            <label for="txtPhone" class="control-label">Số điện thoại<span
+                                    class="require">(*)</span></label>
                             <div class="inner-addon left-addon">
-                                <i class="fa fa-key" aria-hidden="true"></i>
-                                <input max="10000" min="1" name="soluongnv" type="number" class="form-control" id="txtSLNV" placeholder="Số lượng nhân viên">
-                                
+                                <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                <input name="SoDienThoai" type="text" class="form-control" id="txtPhone" placeholder="Số điện thoại">
                             </div>
                         </div>
+                       
                         <div class="form-group col-xs-12">
-                            <label for="txtTHSD" class="control-label">Thời hạn sử dụng <span
+                            <label for="txtNgaySinh" class="control-label">Ngày sinh<span
                                     class="require">(*)</span></label>
                             <div class="inner-addon left-addon">
                                 <i class="fa fa-check-square" aria-hidden="true"></i>
-                                <input name="thoihansd" type="date" value="${now}" class="form-control" id="txtTHSD"
-                                       placeholder="Thời hạn sử dụng">
+                                <input name="NgaySinh" type="date" value="${now}" class="form-control" id="txtNgaySinh"
+                                       placeholder="Ngày sinh">
                             </div>
                         </div>
                         <div class="form-group col-xs-12">
-                            <label for="txtEmail" class="control-label">Email</label>
+                            <label for="txtUsername" class="control-label">Tên đăng nhập</label>
                             <div class="inner-addon left-addon">
-                                <i class="fa fa-envelope-open" aria-hidden="true"></i>
-                                <input name="email" type="email" class="form-control" id="txtEmail" placeholder="Email">
+                                <i aria-hidden="true"></i>
+                                <input name="Username" type="text" class="form-control" id="txtUsername" placeholder="Username">
                             </div>
                         </div>
                         <div class="form-group col-xs-12">
-                            <label for="txtServerToda" class="control-label">Server Toda<span class="require">(*)</span></label>
-                            <div class="inner-addon left-addon">
-                                <i class="fa fa-key" aria-hidden="true"></i>
-                                <input name="serverToda" type="text" class="form-control" id="txtServerToda" placeholder="Ví dụ: 10.100.1.22">
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-12">
-                            <label for="txtMatKhauToda" class="control-label">Mật khẩu Toda<span class="require">(*)</span></label>
+                            <label for="txtPass" class="control-label">Mật khẩu<span class="require">(*)</span></label>
                             <div class="inner-addon left-addon">
                                 <i class="fa fa-key" aria-hidden="true"></i>
-                                <input name="passToda" type="text" class="form-control" id="txtMatKhauToda" placeholder="Ví dụ: lhabc11">
+                                <input name="Password" type="password" class="form-control" id="txtPass" >
                             </div>
                         </div>
                         <div class="form-group col-xs-12">
-                            <label for="txtPrefix" class="control-label">Prefix<span class="require">(*)</span></label>
+                            <label for="txtMail" class="control-label">Email<span class="require">(*)</span></label>
                             <div class="inner-addon left-addon">
-                                <i class="fa fa-key" aria-hidden="true"></i>
-                                <input name="prefix" type="number" class="form-control" id="txtPrefix" placeholder="Ví dụ: 100">
+                                <i  aria-hidden="true"></i>
+                                <input name="Mail" type="email" class="form-control" id="txtMail" placeholder="abcxyz@gmail.com">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12">
+                            <label for="txtGioiTinh" class="control-label">Giới tính<span class="require">(*)</span></label>
+                            <div class="inner-addon left-addon">
+                                <i  aria-hidden="true"></i>
+                                <input name="GioiTinh" type="radio" id="txtGioiTinh" value="True">
+                                <label>Nam</label>
+                                <input name="GioiTinh" type="radio" id="txtGioiTinh" value="False">
+                                <label>Nữ</label>
                             </div>
                         </div>
                      
                         <div class="form-group col-xs-12">
-                            <input name="cbDanhBaKhachHang" id="cbDanhBaKhachHang"  type="checkbox" style="display: inline;margin-top: 8px" value="true" >
-                            <label for="cbDanhBaKhachHang" class="control-label">Danh bạ khách hàng</label>
+                            <input name="IsAdmin" id="IsAdmin"  type="checkbox" style="display: inline;margin-top: 8px" value="true" >
+                            <label for="IsAdmin" class="control-label">Is Admin</label>
                         </div>
                         <div class="form-group col-xs-12">
-                            <input name="cbCapNhatFileIVR" id="cbCapNhatFileIVR"  type="checkbox" style="display: inline;margin-top: 8px" value="true" >
-                            <label for="cbCapNhatFileIVR" class="control-label">Cập nhập file IVR</label>
+                            <input name="ThemDuAn" id="ThemDuAn"  type="checkbox" style="display: inline;margin-top: 8px" value="true" >
+                            <label for="ThemDuAn" class="control-label">Thêm dự án</label>
                         </div>
                         <div class="form-group col-xs-12 text-center" style="margin-top: 16px">
                             <label id="lbErr" class="label label-danger "></label>
