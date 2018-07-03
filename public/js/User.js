@@ -104,15 +104,38 @@ $(document).ready(function () {
     });
     $('#btnEditUser').click(function (e) {
         $('#type').val("edit");
-        let ids = example.rows('.selected').data();
-        // console.log(ids)
-        $('#AddEditEmployeePopup').modal()
+        let data = example.rows('.selected').data();
+        switch (data.length) {
+            case 0:
+                alert("Bạn chưa chọn?")
+            case 1:
+                const id = data[0][1];
+                //dit me cop thoi ma nhu cc
+                $.get('api/user/get/' + id, data => {
+                    //lay dc thong tin user ve
+                    console.log(data)
+                    if (data.Status) {
+
+                        const user = data.User;
+                        // set thu 1 cai name
+                        $('#txtName').val(user.Name);
+                        $('#AddEditEmployeePopup').modal()
+                    } else {
+                        alert("Đéo có quyền sửa")
+                    }
+
+                })
+                break;
+            default:
+                alert("Bạn chọn quá nhiều")
+        }
+
     });
     $('#btnDeleteUser').click(function (e) {
         let data = example.rows('.selected').data();
         switch (data.length) {
             case 0:
-                alert("Đit me chọn đi")
+                alert("Bạn chưa chọn?")
                 break;
             case 1:
                 $.post('api/user/deleteUser', {
@@ -124,7 +147,7 @@ $(document).ready(function () {
                 })
                 break;
             default:
-                alert("Chọn lồn chọn lắm")
+                alert("Bạn chọn quá nhiều")
         }
 
 
@@ -133,8 +156,10 @@ $(document).ready(function () {
         // }, function (data) {
         //     alert(data.Message)
         // }))
-    });
-});
+
+    })
+})
+
 
 function initModal() {
     let now = moment().format('YYYY-MM-DD');

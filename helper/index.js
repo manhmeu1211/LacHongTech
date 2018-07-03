@@ -209,7 +209,7 @@ function insertDoneWork(ID, IdUser, callback) {
 }
 
 function editWork(work, callback) {
-    let {ID,Hangmuc, Phanhe, Mota, Ngaybatdau, Deadline, Status, Nguoiyeucau, Nguoithuchien, TenDuAn} = work;
+    let {ID, Hangmuc, Phanhe, Mota, Ngaybatdau, Deadline, Status, Nguoiyeucau, Nguoithuchien, TenDuAn} = work;
     pool.request()
         .input('Hangmuc', sql.NVarChar(50), Hangmuc)
         .input('ID', sql.Int, ID)
@@ -230,14 +230,26 @@ function editWork(work, callback) {
     })
 }
 
-function countGhim(ID, callback){
+function countGhim(ID, callback) {
     pool.request()
         .input('ID', sql.Int, +ID)
         .execute('usp_Bach_Ghim')
-        .then(result =>{
+        .then(result => {
             callback(result.recordset)
-        }).catch(err =>{
-            console.log('Lỗi')
+        }).catch(err => {
+        console.log('Lỗi')
+    })
+}
+
+function selectUserByID(ID, callback) {
+
+    pool.request()
+        .input('ID', sql.Int, +ID)
+        .execute('usp_User_Bach_selectByID')
+        .then(result => {
+            callback(result.recordset[0])
+        }).catch(err => {
+        console.log('Lỗi')
     })
 }
 
@@ -258,5 +270,6 @@ module.exports = {
     editWork,
     getHangMucById,
     countGhim,
-    insertDoneWork
+    insertDoneWork,
+    selectUserByID
 }
