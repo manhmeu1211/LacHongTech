@@ -25,18 +25,19 @@ function getAlluser(callback) {
 }
 
 function addUser(user, callback) {
+
     let {Username, Password, Name, DiaChi, Mail, IsAdmin, NgaySinh, GioiTinh, SoDienThoai, ThemDuAn} = user;
     Password = md5(Password);
     pool.request()
         .input('Username', sql.VarChar(150), Username)
         .input('PassWord', sql.VarChar(150), Password)
-        .input('ThemDuAn', sql.Bit, ThemDuAn)
+        .input('ThemDuAn', sql.Bit, ThemDuAn || false)
         .input('Name', sql.NVarChar(250), Name)
         .input('Diachi', sql.NVarChar(200), DiaChi)
         .input('mail', sql.VarChar(200), Mail)
         .input('Gioitinh', sql.Bit, GioiTinh)
         .input('NgaySinh', sql.Date, NgaySinh)
-        .input('isAdmin', sql.Bit, IsAdmin)
+        .input('isAdmin', sql.Bit, IsAdmin || false)
         .input('sdt', sql.VarChar(20), SoDienThoai)
         .execute('usp_User_bach_Insert')
         .then(result => {
@@ -47,11 +48,12 @@ function addUser(user, callback) {
 }
 
 function editUser(user, callback) {
-    let {Name, DiaChi, Mail, IsAdmin, NgaySinh, GioiTinh, SoDienThoai, ID, ThemDuAn} = user;
+    let {Name, DiaChi, Mail, IsAdmin, NgaySinh, GioiTinh, SoDienThoai, ID, ThemDuAn, Username} = user;
     pool.request()
         .input('ID', sql.Int, ID)
         .input('ThemDuAn', sql.Bit, ThemDuAn)
         .input('Name', sql.NVarChar(250), Name)
+        .input('Username', sql.NVarChar(250), Username)
         .input('Diachi', sql.NVarChar(200), DiaChi)
         .input('mail', sql.VarChar(200), Mail)
         .input('Gioitinh', sql.Bit, GioiTinh)
@@ -208,20 +210,21 @@ function insertDoneWork(ID, IdUser, callback) {
 }
 
 function editWork(work, callback) {
-    let {ID,Hangmuc, Phanhe, Mota, Ngaybatdau, Deadline, Status, Nguoiyeucau, Nguoithuchien, TenDuAn} = work;
+    let {ID, HangMuc, PhanHe, MoTa, NgayBatDau, Deadline, Status, NguoiYeuCau, NguoiThucHien, TenDuAn, IdDuAn} = work;
     pool.request()
-        .input('Hangmuc', sql.NVarChar(50), Hangmuc)
+        .input('Hangmuc', sql.NVarChar(50), HangMuc)
         .input('ID', sql.Int, ID)
-        .input('Phanhe', sql.NVarChar(50), Phanhe)
-        .input('Mota', sql.NVarChar(1000), Mota)
-        .input('Ngaybatdau', sql.Date, Ngaybatdau)
+        .input('Phanhe', sql.NVarChar(50), PhanHe)
+        .input('Mota', sql.NVarChar(1000), MoTa)
+        .input('Ngaybatdau', sql.Date, NgayBatDau)
         .input('Deadline', sql.Date, Deadline)
-        .input('Trangthai', sql.Int, Status)
-        .input('Nguoiyeucau', sql.NVarChar(150), Nguoiyeucau)
-        .input('Nguoithuchien', sql.NVarChar(150), Nguoithuchien)
-        .input('IdDuAn', sql.Int, +TenDuAn)
+        .input('Status', sql.Int, Status)
+        .input('Nguoiyeucau', sql.NVarChar(150), NguoiYeuCau)
+        .input('Nguoithuchien', sql.NVarChar(150), NguoiThucHien)
+        .input('IdDuAn', sql.Int, +IdDuAn)
         .execute('usp_Work_Bach_UpdateWork')
         .then(result => {
+            console.log(result)
             callback(true)
         }).catch(err => {
         console.log(err)
@@ -229,14 +232,14 @@ function editWork(work, callback) {
     })
 }
 
-function countGhim(ID, callback){
+function countGhim(ID, callback) {
     pool.request()
         .input('ID', sql.Int, +ID)
         .execute('usp_Bach_Ghim')
-        .then(result =>{
+        .then(result => {
             callback(result.recordset)
-        }).catch(err =>{
-            console.log('Lỗi')
+        }).catch(err => {
+        console.log('Lỗi')
     })
 }
 

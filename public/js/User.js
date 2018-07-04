@@ -137,13 +137,17 @@ $(document).ready(function () {
                 alert("Bạn chưa chọn?")
                 break;
             case 1:
-                $.post('api/user/deleteUser', {
-                    ID: data[0][1]
-                }, function (data) {
-                    console.log(data)
-                    alert(data.Message)
-                    window.location.reload();
-                })
+                let r = confirm("Mày thực sự muốn xóa!");
+                if (r) {
+                    $.post('api/user/deleteUser', {
+                        ID: data[0][1]
+                    }, function (data) {
+                        console.log(data)
+                        alert(data.Message)
+                        window.location.reload();
+                    })
+                }
+
                 break;
             default:
                 alert("Bạn chọn quá nhiều")

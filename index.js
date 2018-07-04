@@ -61,7 +61,7 @@ app.get('/', (req, res) => {
     let token = req.session.token;
     let user = verifyToken(token);
     if (user) {
-        res.render('home')
+        res.render('home');
     } else {
         res.render('login', {layout: false});
     }
@@ -74,7 +74,8 @@ app.post('/login', (req, res) => {
             res.render("login", {layout: false, username})
         } else {
             getAlluser(data => {
-                res.render('user', {users: data})
+                res.redirect('/user')
+
             });
             req.session.token = getToken(data[0]);
         }
