@@ -25,6 +25,7 @@ router.get('/getAll', (req, res) => {
 router.post('/add', (req, res) => {
     let user = verifyToken(req.headers.token);
     console.log(req.body);
+    res.send(req.body)
     if (!user.IsAdmin) {
         res.send({
             Status: false,
@@ -86,13 +87,13 @@ router.post('/delete', (req, res) => {
 });
 
 
-//Web
+//web
 
 
 router.post("/addUser", (req, res) => {
     let user = verifyToken(req.session.token);
     let type = req.body.type;
-    if (type === 'add') {
+    if (type === add) {
         if (!user.IsAdmin) {
             res.send({
                 Status: false,
@@ -111,14 +112,14 @@ router.post("/addUser", (req, res) => {
             })
         }
     }
-    else if (type === 'edit') {
+    else if (type === edit) {
         if (!user.IsAdmin && user.ID !== ID) {
             res.send({
                 Status: false,
                 Messgae: "Bạn không có quyền để chỉnh sửa user này!"
             })
         } else {
-            editUser(req.body.ID, (data) => {
+            editUser(req.body, (data) => {
                 res.send({
                     Status: true,
                     Messgae: "Thành công!"
@@ -127,8 +128,6 @@ router.post("/addUser", (req, res) => {
         }
     }
 });
-
-
 router.get('/get/:id', (req, res) => {
     // tra ve thong tin cho client theo id
     // cai nay get thoai mai nen can bao mat, neu k bao mat thi co the tan cong dictionary lay het user
@@ -142,7 +141,7 @@ router.get('/get/:id', (req, res) => {
         })
     } else {
         let id = req.params.id;
-        selectUserByID(id, (data) => {
+        selectUserByID(id,(data)=>{
             res.send({
                 Status: true,
                 Message: "Xu ly thanh cong",
@@ -151,7 +150,6 @@ router.get('/get/:id', (req, res) => {
         })
     }
 });
-
 
 router.post("/deleteUser", (req, res) => {
     let user = verifyToken(req.session.token);

@@ -98,38 +98,39 @@ $(document).ready(function () {
     $('#header th:nth-child(1)').removeClass('sorting_asc');
     $('#header th:nth-child(1)').addClass('sorting_disabled');
     $('[data-toggle="tooltip"]').tooltip();
-    $('#example tbody').on('dblclick', 'tr', function () {
-        let id = example.row(this).data()[1];
-        $('#type').val("edit");
-
-        $('#titleModal').text("Sửa nhân viên");
-        editUser(id)
-        $('#AddEditEmployeePopup').modal();
-    });
     $('#btnAddUer').click(function (e) {
         // console.log("addd")
-        $('#titleModal').text("Thêm mới nhân viên");
-        $('#type').val("add");
         $('#AddEditEmployeePopup').modal();
     });
     $('#btnEditUser').click(function (e) {
         $('#type').val("edit");
-        $('#titleModal').text("Sửa nhân viên");
-
         let data = example.rows('.selected').data();
         switch (data.length) {
             case 0:
                 alert("Bạn chưa chọn?")
             case 1:
                 const id = data[0][1];
-                editUser(id);
+                //dit me cop thoi ma nhu cc
+                $.get('api/user/get/' + id, data => {
+                    //lay dc thong tin user ve
+                    console.log(data)
+                    if (data.Status) {
+
+                        const user = data.User;
+                        // set thu 1 cai name
+                        $('#txtName').val(user.Name);
+                        $('#AddEditEmployeePopup').modal()
+                    } else {
+                        alert("Đéo có quyền sửa")
+                    }
+
+                })
                 break;
             default:
                 alert("Bạn chọn quá nhiều")
         }
 
     });
-
     $('#btnDeleteUser').click(function (e) {
         let data = example.rows('.selected').data();
         switch (data.length) {
@@ -142,6 +143,7 @@ $(document).ready(function () {
                 }, function (data) {
                     console.log(data)
                     alert(data.Message)
+                    window.location.reload()
                 })
                 break;
             default:
@@ -149,35 +151,13 @@ $(document).ready(function () {
         }
 
 
+        // ids.forEach(item => $.post('api/user/deleteUser', {
+        //     ID: item[1]
+        // }, function (data) {
+        //     alert(data.Message)
+        // }))
+
     })
-
-    function editUser(id) {
-        $.get('api/user/get/' + id, data => {
-            //lay dc thong tin user ve
-            console.log(data)
-            if (data.Status) {
-                const user = data.User;
-                // set thu 1 cai name
-                $('#txtName').val(user.Name);
-                $('#idUser').val(user.ID);
-                $('#txtNgaySinh').val(moment(user.NgaySinh).format('YYYY-MM-DD'))
-                $('#txtMail').val(user.Mail)
-                $('#txtPhone').val(user.SoDienThoai)
-                $('#txtAddress').val(user.DiaChi)
-                $('#IsAdmin').prop('checked', true);
-                if (user.NgaySinh === 'Nam') {
-                    $('#txtGioiTinhNam').prop('checked', true);
-                }
-                else {
-                    $('#txtGioiTinhNu').prop('checked', true);
-                }
-                $('#AddEditEmployeePopup').modal()
-
-            } else {
-                alert("Không có quyền sửa")
-            }
-        })
-    }
 })
 
 
@@ -193,7 +173,6 @@ function initModal() {
                         <button type="button" class="close" data-dismiss="modal"></button>
                         <h2 id="titleModal" class="modal-title">Thêm mới nhân viên</h2>
                     </div>
-                    <input name ="ID" class = "hidden" type ="text" id ="idUser">
                     <div class="modal-body" >
                         <div class="form-group col-xs-12">
                             <label for="txtName" class="control-label" style="margin-top: 8px">Tên<span
@@ -208,7 +187,7 @@ function initModal() {
                                     class="require">(*)</span></label>
                             <div class="inner-addon left-addon">
                                 <i class="fa fa-sign-in" aria-hidden="true"></i>
-                                <input name="Diachi" type="text" class="form-control" id="txtAddress" placeholder="Địa chỉ">
+                                <input name="DiaChi" type="text" class="form-control" id="txtAddress" placeholder="Địa chỉ">
                             </div>
                         </div> 
                         <div class="form-group col-xs-12">
@@ -254,9 +233,9 @@ function initModal() {
                             <label for="txtGioiTinh" class="control-label">Giới tính<span class="require">(*)</span></label>
                             <div class="inner-addon left-addon">
                                 <i  aria-hidden="true"></i>
-                                <input name="GioiTinh" type="radio" id="txtGioiTinhNam" value="True">
+                                <input name="GioiTinh" type="radio" id="txtGioiTinh" value="True">
                                 <label>Nam</label>
-                                <input name="GioiTinh" type="radio" id="txtGioiTinhNu" value="False">
+                                <input name="GioiTinh" type="radio" id="txtGioiTinh" value="False">
                                 <label>Nữ</label>
                             </div>
                         </div>
