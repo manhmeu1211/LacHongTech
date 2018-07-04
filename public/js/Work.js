@@ -21,7 +21,6 @@ $(document).ready(function () {
             {title: "Mô Tả"},
             {title: "Ngày bắt đầu"},
             {title: "Deadline"},
-            {title: "Ngày hoàn thành"},
             {title: "Status"},
             {title: "Người Yêu cầu"},
             {title: "Người thực hiện"},
@@ -49,7 +48,9 @@ $(document).ready(function () {
             },
             {
                 "width": "15%",
-                "targets": 4
+                "targets": 4,
+                "render": function ( data, type, row ) {
+                    return moment(data).format('DD-MM-YYYY HH:mm:ss')}
             },
             {
                 "width": "15%",
@@ -59,9 +60,7 @@ $(document).ready(function () {
             },
             {
                 "width": "15%",
-                "targets": 6,
-                "render": function ( data, type, row ) {
-                    return moment(data).format('DD-MM-YYYY HH:mm:ss')}
+                "targets": 6
             },
             {
                 "width": "15%",
@@ -74,10 +73,6 @@ $(document).ready(function () {
             {
                 "width": "15%",
                 "targets": 9
-            },
-            {
-                "width": "5%",
-                "targets": 10
             }]
     });
     example.columns().eq(0).each(function (colIdx) {
@@ -98,8 +93,7 @@ $(document).ready(function () {
     $.get(`api/work/getAll/${getUrlParameter('id')}`, data => {
         console.log(data)
         let arr = data.map(work => {
-            let {Deadline,Hangmuc,ID,Mota,Ngaybatdau,Nguoiyeucau,Nguoithuchien,Phanhe,Status,TenDuAn}=work;
-            return ["", ID, Hangmuc, Phanhe, Mota, Ngaybatdau, Deadline, "", Status, Nguoiyeucau, Nguoithuchien, TenDuAn]
+            return ["", work.ID, work.HangMuc, work.PhanHe, work.MoTa, work.NgayBatDau, work.DeadLine, work.Status, work.Nguoiyeucau, work.Nguoithuchien, work.IdDuAn]
         })
         console.log(arr)
         example.clear().rows.add(arr).draw();

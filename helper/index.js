@@ -79,9 +79,10 @@ function deleteUser(user, callback) {
 }
 
 function addDuAn(duan, callback) {
-    let {TenDuAn} = duan;
+    let {TenDuAn, NgayTao} = duan;
     pool.request()
-        .input('Name', sql.NVarChar(100), TenDuAn)
+        .input('tenDuAn', sql.NVarChar(100), TenDuAn)
+        .input('NgayTao', sql.Date, NgayTao)
         .execute('usp_DuAn_Bach_Insert')
         .then(result => {
             callback(true)

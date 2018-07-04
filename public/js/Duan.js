@@ -48,7 +48,7 @@ $(document).ready(function () {
                 "targets": 4,
                 "render": function ( data, type, row ) {
                     return `<div class="text-center">
-                                <a href="work?id=${data}"> <img  title="Danh sách account" src="images/logo.png" height="16" width="16"></a>
+                                <a href="work?id=${data}"> Click!</a>
                                  </div>`;
                 },
             }]
@@ -89,99 +89,28 @@ function initModal() {
     $('#page-popup').html(`<div id="AddEditEmployeePopup" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content" >
-                <form id="frmAddCompany" class="form-horizontal" method="post" action="router/company">
+                <form id="frmAddCompany" class="form-horizontal" method="post" action="/api/duan/add">
                 <input name="type" id="type" class="hidden" value="add">
-                <input name="mactOld" id="mactOld" class="hidden">
                     <div class="modal-header" style="border-bottom: 0px">
                         <button type="button" class="close" data-dismiss="modal"></button>
-                        <h2 id="titleModal" class="modal-title">Thêm mới công ty</h2>
+                        <h2 id="titleModal" class="modal-title">Thêm mới dự án</h2>
                     </div>
                     <div class="modal-body" >
                         <div class="form-group col-xs-12">
-                            <label for="txtTenCt" class="control-label" style="margin-top: 8px">Tên công ty <span
+                            <label for="txtTenDuAn" class="control-label" style="margin-top: 8px">Tên dự án<span
                                     class="require">(*)</span></label>
                             <div class="inner-addon left-addon">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                                <input name="tenct" type="text" class="form-control" id="txtTenCt" placeholder="Tên công ty">
+                                <i aria-hidden="true"></i>
+                                <input name="TenDuAn" type="text" class="form-control" id="txtTenDuAn">
                             </div>
                         </div>
                         <div class="form-group col-xs-12">
-                            <label for="txtMact" class="control-label">Mã công ty <span
-                                    class="require">(*)</span></label>
-                            <div class="inner-addon left-addon">
-                                <i class="fa fa-sign-in" aria-hidden="true"></i>
-                                <input name="mact" type="text" class="form-control" id="txtMact" placeholder="Mã công ty">
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-12">
-                            <label for="txtSLNV" class="control-label">Số lượng nhân viên<span class="require">(*)</span></label>
-                            <div class="inner-addon left-addon">
-                                <i class="fa fa-key" aria-hidden="true"></i>
-                                <input max="10000" min="1" name="soluongnv" type="number" class="form-control" id="txtSLNV" placeholder="Số lượng nhân viên">
-                                
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-12">
-                            <label for="txtTHSD" class="control-label">Thời hạn sử dụng <span
+                            <label for="txtNgayTao" class="control-label">Ngày Tạo<span
                                     class="require">(*)</span></label>
                             <div class="inner-addon left-addon">
                                 <i class="fa fa-check-square" aria-hidden="true"></i>
-                                <input name="thoihansd" type="date" value="${now}" class="form-control" id="txtTHSD"
-                                       placeholder="Thời hạn sử dụng">
+                                <input name="NgayTao" type="date" value="${now}" class="form-control" id="txtNgayTao">
                             </div>
-                        </div>
-                        <div class="form-group col-xs-12">
-                            <label for="txtEmail" class="control-label">Email</label>
-                            <div class="inner-addon left-addon">
-                                <i class="fa fa-envelope-open" aria-hidden="true"></i>
-                                <input name="email" type="email" class="form-control" id="txtEmail" placeholder="Email">
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-12">
-                            <label for="txtServerToda" class="control-label">Server Toda<span class="require">(*)</span></label>
-                            <div class="inner-addon left-addon">
-                                <i class="fa fa-key" aria-hidden="true"></i>
-                                <input name="serverToda" type="text" class="form-control" id="txtServerToda" placeholder="Ví dụ: 10.100.1.22">
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-12">
-                            <label for="txtMatKhauToda" class="control-label">Mật khẩu Toda<span class="require">(*)</span></label>
-                            <div class="inner-addon left-addon">
-                                <i class="fa fa-key" aria-hidden="true"></i>
-                                <input name="passToda" type="text" class="form-control" id="txtMatKhauToda" placeholder="Ví dụ: lhabc11">
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-12">
-                            <label for="txtPrefix" class="control-label">Prefix<span class="require">(*)</span></label>
-                            <div class="inner-addon left-addon">
-                                <i class="fa fa-key" aria-hidden="true"></i>
-                                <input name="prefix" type="number" class="form-control" id="txtPrefix" placeholder="Ví dụ: 100">
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-12">
-                            <input name="cbIsActive" id="cbIsActive"  type="checkbox" style="display: inline;margin-top: 8px" value="true" >
-                            <label for="cbIsActive" class="control-label">Is Active</label>
-                        </div>
-                        <div class="form-group col-xs-12">
-                            <input name="cbSeeOnOff" id="cbSeeOnOff" type="checkbox" style="display: inline;margin-top: 8px" value="true" >
-                            <label for="cbSeeOnOff" class="control-label">Cho xem On/Off extension</label>
-                        </div>
-                        <div class="form-group col-xs-12">
-                            <input name="cbTinNhanNoiBo" id="cbTinNhanNoiBo"  type="checkbox" style="display: inline;margin-top: 8px" value="true" >
-                            <label for="cbTinNhanNoiBo" class="control-label">Gửi tin nhắn nội bộ</label>
-                        </div>
-                        <div class="form-group col-xs-12">
-                            <input name="cbDanhBaKhachHang" id="cbDanhBaKhachHang"  type="checkbox" style="display: inline;margin-top: 8px" value="true" >
-                            <label for="cbDanhBaKhachHang" class="control-label">Danh bạ khách hàng</label>
-                        </div>
-                        <div class="form-group col-xs-12">
-                            <input name="cbCapNhatFileIVR" id="cbCapNhatFileIVR"  type="checkbox" style="display: inline;margin-top: 8px" value="true" >
-                            <label for="cbCapNhatFileIVR" class="control-label">Cập nhập file IVR</label>
-                        </div>
-                        <div class="form-group col-xs-12 text-center" style="margin-top: 16px">
-                            <label id="lbErr" class="label label-danger "></label>
-                        </div>
-                    </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" id="btnSave" data-toggle="tooltip"
                                 data-placement="bottom" title="Lưu lại">

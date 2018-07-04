@@ -142,6 +142,7 @@ $(document).ready(function () {
                 }, function (data) {
                     console.log(data)
                     alert(data.Message)
+                    window.location.reload();
                 })
                 break;
             default:

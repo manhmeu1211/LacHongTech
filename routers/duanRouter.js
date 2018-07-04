@@ -26,20 +26,43 @@ router.get('/getAll', (req, res) => {
     });
 });
 
-router.post('/deleteDuAn', (req, res) => {
-    let user = verifyToken(req.headers.token);
-    if (!user.IsAdmin) {
+// router.post('/deleteDuAn', (req, res) => {
+//     let user = verifyToken(req.headers.token);
+//     if (!user.IsAdmin) {
+//         res.send({
+//             Status: false,
+//             Messgae: "Bạn không có quyền để xóa dự án này!"
+//         })
+//     }
+//     else {
+//         deleteDuAn(req.body, (data) => {
+//             res.send({
+//                 status: true,
+//                 msg: "Xóa thành công"
+//             })
+//         })
+//     }
+// });
+
+//web back-end
+router.post('/add', (req, res) => {
+    let user = verifyToken(req.session.token);
+    if (!user.ThemDuAn) {
         res.send({
             Status: false,
-            Messgae: "Bạn không có quyền để xóa dự án này!"
-        })
+            Message: "Không có quyền thêm dự án"
+        });
     }
     else {
-        deleteDuAn(req.body, (data) => {
-            res.send({
-                status: true,
-                msg: "Xóa thành công"
-            })
+        addDuAn(req.body, (isadd) => {
+            if (isadd) {
+                res.redirect('/duan');
+            } else {
+                res.send({
+                    Status: false,
+                    Massage: "Dự án đã tồn tại!"
+                });
+            }
         })
     }
 });
