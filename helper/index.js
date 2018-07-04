@@ -47,11 +47,9 @@ function addUser(user, callback) {
 }
 
 function editUser(user, callback) {
-    let {Username, Password, Name, DiaChi, Mail, IsAdmin, NgaySinh, GioiTinh, SoDienThoai, ID, ThemDuAn} = user;
+    let {Name, DiaChi, Mail, IsAdmin, NgaySinh, GioiTinh, SoDienThoai, ID, ThemDuAn} = user;
     pool.request()
-        .input('Username', sql.VarChar(150), Username)
         .input('ID', sql.Int, ID)
-        .input('PassWord', sql.VarChar(150), null)
         .input('ThemDuAn', sql.Bit, ThemDuAn)
         .input('Name', sql.NVarChar(250), Name)
         .input('Diachi', sql.NVarChar(200), DiaChi)
@@ -209,7 +207,7 @@ function insertDoneWork(ID, IdUser, callback) {
 }
 
 function editWork(work, callback) {
-    let {ID, Hangmuc, Phanhe, Mota, Ngaybatdau, Deadline, Status, Nguoiyeucau, Nguoithuchien, TenDuAn} = work;
+    let {ID,Hangmuc, Phanhe, Mota, Ngaybatdau, Deadline, Status, Nguoiyeucau, Nguoithuchien, TenDuAn} = work;
     pool.request()
         .input('Hangmuc', sql.NVarChar(50), Hangmuc)
         .input('ID', sql.Int, ID)
@@ -230,14 +228,14 @@ function editWork(work, callback) {
     })
 }
 
-function countGhim(ID, callback) {
+function countGhim(ID, callback){
     pool.request()
         .input('ID', sql.Int, +ID)
         .execute('usp_Bach_Ghim')
-        .then(result => {
+        .then(result =>{
             callback(result.recordset)
-        }).catch(err => {
-        console.log('Lỗi')
+        }).catch(err =>{
+            console.log('Lỗi')
     })
 }
 
@@ -252,6 +250,7 @@ function selectUserByID(ID, callback) {
         console.log('Lỗi')
     })
 }
+
 
 module.exports = {
     login,
@@ -271,5 +270,5 @@ module.exports = {
     getHangMucById,
     countGhim,
     insertDoneWork,
-    selectUserByID
+    selectUserByID,
 }

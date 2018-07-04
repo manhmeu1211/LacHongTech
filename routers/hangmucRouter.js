@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {getToken, verifyToken} = require('../utils');
-const {getAllHangMuc, insertDoneWork, addWork, deleteWork, editWork, getHangMucById} = require('../helper');
+const {getAllHangMuc, addWork, deleteWork,editWork,getHangMucById,insertDoneWork} = require('../helper');
 router.post('/add', (req, res) => {
     let user = verifyToken(req.headers.token);
     console.log(req.body);
@@ -89,42 +89,12 @@ router.get('/getAll/:id', (req, res) => {
         res.send(data);
     })
 });
-router.get('/done/:id', (req, res) => {
-    const id = req.params.id;
-    let user = verifyToken(req.headers.token);
-    if (user) {
-        insertDoneWork(id, user.ID, (result) => {
-            console.log(result);
-            if (result) {
-                res.send({
-                    Status: true,
-                    Message: "Xử lý thành công"
-                })
-            } else {
-                res.send({
-                    Status: false,
-                    Message: "Bạn không có quyền báo xong hạng mục này!"
-                })
-            }
-        })
-    } else {
-        res.send({
-            Status: false,
-            Message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại"
-        })
-    }
-});
-
 
 router.get('/get/:id', (req, res) => {
     const id = req.params.id;
-    let user = verifyToken(req.headers.token);
-    if (user) {
-        getHangMucById(id, data => {
-            res.send(data[0] || {});
-        })
-    }
-
+    getHangMucById(id, data => {
+        res.send(data[0]||{});
+    })
 });
 
 
