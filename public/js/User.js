@@ -119,6 +119,15 @@ $(document).ready(function () {
                         const user = data.User;
                         // set thu 1 cai name
                         $('#txtName').val(user.Name);
+                        $('#txtAddress').val(user.DiaChi);
+                        $('#txtPhone').val(user.SoDienThoai);
+                        $('#txtNgaysinh').val(user.NgaySinh);
+                        $('#txtUsername').val(user.Username);
+                        $('#txtPass').val(user.password);
+                        $('#txtMail').val(user.Mail);
+                        $('#txtGioiTinh').val(user.GioiTinh);
+                        $('#IsAdmin').val(user.IsAdmin);
+                        $('#ThemDuAn').val(user.ThemDuAn);
                         $('#AddEditEmployeePopup').modal()
                     } else {
                         alert("Đéo có quyền sửa")

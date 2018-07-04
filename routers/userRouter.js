@@ -93,7 +93,7 @@ router.post('/delete', (req, res) => {
 router.post("/addUser", (req, res) => {
     let user = verifyToken(req.session.token);
     let type = req.body.type;
-    if (type === add) {
+    if (type === "add") {
         if (!user.IsAdmin) {
             res.send({
                 Status: false,
@@ -112,7 +112,7 @@ router.post("/addUser", (req, res) => {
             })
         }
     }
-    else if (type === edit) {
+    else if (type === "edit") {
         if (!user.IsAdmin && user.ID !== ID) {
             res.send({
                 Status: false,
@@ -120,9 +120,10 @@ router.post("/addUser", (req, res) => {
             })
         } else {
             editUser(req.body, (data) => {
+                res.redirect('/user')
                 res.send({
-                    Status: true,
-                    Messgae: "Thành công!"
+                    Status: True,
+                    Messgae: "Bạn không có quyền để chỉnh sửa user này!"
                 })
             })
         }
