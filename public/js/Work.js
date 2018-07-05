@@ -98,8 +98,6 @@ $(document).ready(function () {
         console.log(arr)
         example.clear().rows.add(arr).draw();
     });
-//let arr = results.map((item, i) => ["", i + 1, item.Destination, moment(item.TimeCall).format("DD-MM-YYYY HH:mm:ss"), item.Status, item.Press, String(item.Duration).toHHMMSS()]);
-    // example.clear().rows.add(arr).draw();
     $('#header').prependTo('#thead1');
     $('#header th:nth-child(1)').removeClass('sorting_asc');
     $('#header th:nth-child(1)').addClass('sorting_disabled');
@@ -125,7 +123,7 @@ function getUrlParameter(sParam) {
             return sParameterName[1] === undefined ? true : sParameterName[1];
         }
     }
-};
+}
 function initModal() {
     let now = moment().format('YYYY-MM-DD');
     $('#page-popup').html(`<div id="AddEditEmployeePopup" class="modal fade" role="dialog">

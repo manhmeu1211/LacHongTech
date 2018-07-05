@@ -108,7 +108,7 @@ function getAllDuAn(callback) {
 function getAllHangMuc(id, callback) {
     pool.request()
         .input('ID', sql.Int, id)
-        .execute('usp_Work_Bach_selectByIDDuAn')
+        .execute('usp_Work_Bach_selectByIDDuAnV2')
         .then(result => {
             callback(result.recordset)
         }).catch(err => {
@@ -165,16 +165,16 @@ function deleteDuAn(duan, callback) {
 }
 
 function addWork(work, callback) {
-    let {Hangmuc, Phanhe, Mota, Ngaybatdau, Deadline, Status, Nguoiyeucau, Nguoithuchien, TenDuAn} = work;
+    let {HangMuc, PhanHe, MoTa, NgayBatDau, Deadline, Status, NguoiYeuCau, NguoiThucHien, TenDuAn} = work;
     pool.request()
-        .input('Hangmuc', sql.NVarChar(50), Hangmuc)
-        .input('Phanhe', sql.NVarChar(50), Phanhe)
-        .input('Mota', sql.NVarChar(1000), Mota)
-        .input('Ngaybatdau', sql.Date, Ngaybatdau)
+        .input('Hangmuc', sql.NVarChar(50), HangMuc)
+        .input('Phanhe', sql.NVarChar(50), PhanHe)
+        .input('Mota', sql.NVarChar(1000), MoTa)
+        .input('Ngaybatdau', sql.Date, NgayBatDau)
         .input('Deadline', sql.Date, Deadline)
         .input('Trangthai', sql.Int, Status)
-        .input('Nguoiyeucau', sql.NVarChar(150), Nguoiyeucau)
-        .input('Nguoithuchien', sql.NVarChar(150), Nguoithuchien)
+        .input('Nguoiyeucau', sql.NVarChar(150), NguoiYeuCau)
+        .input('Nguoithuchien', sql.NVarChar(150), NguoiThucHien)
         .input('IdDuAn', sql.Int, +TenDuAn)
         .execute('usp_Work_bach_InsertWork')
         .then(result => {
