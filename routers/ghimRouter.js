@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const {getToken, verifyToken} = require('../utils');
 const {countGhim, selectGhimBetweenTwoDate} = require('../helper');
-
+const moment=require("moment")
 
 router.post('/countGhim', (req, res) => {
     let user = verifyToken(req.headers.token);
@@ -13,10 +13,10 @@ router.post("/ghimhoiha", (req, res) => {
     let {Start, End} = req.body;
     console.log(req.body)
     let user = verifyToken(req.headers.token);
-    if (user) {
+    if (!user) {
         res.send("Null cmnr")
     } else {
-        selectGhimBetweenTwoDate(Start, End, data => {
+        selectGhimBetweenTwoDate(moment(Start).format("DD-MM-YYYY HH:mm:ss"), moment(End).format("DD-MM-YYYY HH:mm:ss"), data => {
             res.send(data)
         })
     }

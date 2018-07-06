@@ -187,19 +187,14 @@ function addWork(work, callback) {
 
 function addGhim(obj, callback = () => {
 }) {
-    let objtest = {
-        IdHangMuc: 1,
-        LyDo: 'sadsa',
-        SoGhim: 2,
-        IdUserTao: 1
-    };
-    let {IdHangMuc, LyDo, SoGhim, IdUserTao} = obj;
+    let {IdHangMuc, LyDo, SoGhim, IdUserTao, Loai} = obj;
     pool.request()
         .input('Id_User', sql.Int, IdUserTao)
         .input('Id_Work', sql.Int, IdHangMuc)
         .input('SoGhim', sql.Int, SoGhim)
         .input('LyDo', sql.NVarChar(250), LyDo)
-        .execute('usp_BaoLoi_ManhMeu_Insert')
+        .input('Loai', sql.Int, Loai)
+        .execute('usp_Ghim_ManhMeu_Insert')
         .then(result => {
             callback(true)
         }).catch(err => {
@@ -232,6 +227,24 @@ function insertDoneWork(ID, IdUser, callback) {
     })
 }
 
+function baoLoiWork(obj, callback) {
+    let {SoLoi, MoTa, Deadline, ID, IdUser} = obj
+    pool.request()
+        .input('Id_User', sql.Int, IdUser)
+        .input('Id_Work', sql.Int, ID)
+        .input('SoLoi', sql.Int, SoLoi)
+        .input('MoTa', sql.NVarChar(250), MoTa)
+        .input('Deadline', sql.NVarChar(250), Deadline)
+        .execute('usp_BaoLoi_ManhMeu_Insert')
+        .then(result => {
+            console.log("đmdm", result.recordset[0])
+            callback(result.recordset[0].kq)
+        }).catch(err => {
+        console.log(err)
+        callback(false)
+    })
+}
+
 function editWork(work, callback) {
     let {ID, HangMuc, PhanHe, MoTa, NgayBatDau, Deadline, Status, NguoiYeuCau, NguoiThucHien, TenDuAn, IdDuAn} = work;
     pool.request()
@@ -255,6 +268,19 @@ function editWork(work, callback) {
     })
 }
 
+function selectGhimBetweenTwoDate(start = new Date(), end = new Date(), callback) {
+    pool.request()
+        .input('start', sql.DateTime, start)
+        .input('end', sql.DateTime, end)
+        .execute('usp_Bach_Ghim')
+        .then(result => {
+            callback(result.recordset)
+        }).catch(err => {
+        console.log('Lỗi',err)
+
+    })
+}
+
 function countGhim(ID, callback) {
     pool.request()
         .input('ID', sql.Int, +ID)
@@ -263,6 +289,17 @@ function countGhim(ID, callback) {
             callback(result.recordset)
         }).catch(err => {
         console.log('Lỗi')
+    })
+}
+
+function selectWorkByIdNotOk(id, callback) {
+    pool.request()
+        .input('ID', sql.Int, id)
+        .execute('usp_Work_Bach_SelectNotOk')
+        .then(result => {
+            callback(result.recordset[0])
+        }).catch(err => {
+        console.log('Lỗi', err)
     })
 }
 
@@ -278,6 +315,14 @@ function selectUserByID(ID, callback) {
     })
 }
 
+function queryDataBase(query, callback) {
+    pool.request().query(query, function (error, results, fields) {
+        if (error) throw error;
+        if (callback)
+            callback(results);
+        // console.log(results)
+    });
+}
 
 module.exports = {
     login,
@@ -298,5 +343,9 @@ module.exports = {
     countGhim,
     insertDoneWork,
     selectUserByID,
-    addGhim
+    addGhim,
+    baoLoiWork,
+    selectWorkByIdNotOk,
+    queryDataBase,
+    selectGhimBetweenTwoDate
 }
