@@ -122,7 +122,7 @@ function getHangMucById(id, callback) {
         .input('ID', sql.Int, id)
         .execute('usp_Work_Bach_Select')
         .then(result => {
-            callback(result.recordset)
+            callback(result.recordset[0])
         }).catch(err => {
         console.log(err)
         callback(false)
@@ -180,7 +180,30 @@ function addWork(work, callback) {
         .then(result => {
             callback(true)
         }).catch(err => {
-        console.log(err)
+        console.log(err);
+        callback(false);
+    })
+}
+
+function addGhim(obj, callback = () => {
+}) {
+    let objtest = {
+        IdHangMuc: 1,
+        LyDo: 'sadsa',
+        SoGhim: 2,
+        IdUserTao: 1
+    };
+    let {IdHangMuc, LyDo, SoGhim, IdUserTao} = obj;
+    pool.request()
+        .input('Id_User', sql.Int, IdUserTao)
+        .input('Id_Work', sql.Int, IdHangMuc)
+        .input('SoGhim', sql.Int, SoGhim)
+        .input('LyDo', sql.NVarChar(250), LyDo)
+        .execute('usp_BaoLoi_ManhMeu_Insert')
+        .then(result => {
+            callback(true)
+        }).catch(err => {
+        console.log(err);
         callback(false);
     })
 }
@@ -275,4 +298,5 @@ module.exports = {
     countGhim,
     insertDoneWork,
     selectUserByID,
+    addGhim
 }
