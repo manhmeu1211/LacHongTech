@@ -113,6 +113,8 @@ $(document).ready(function () {
         $('#AddEditEmployeePopup').modal();
     });
     $('#btnEditUser').click(function (e) {
+        jQuery('#divUser').addClass('hidden').removeClass('form-group col-xs-12');
+        jQuery('#divPass').addClass('hidden').removeClass('form-group col-xs-12');
         $('#type').val("edit");
         $('#titleModal').text("Sửa nhân viên");
 
@@ -137,7 +139,7 @@ $(document).ready(function () {
                 alert("Bạn chưa chọn?")
                 break;
             case 1:
-                let r = confirm("Mày thực sự muốn xóa!");
+                let r = confirm("Bạn thực sự muốn xóa!");
                 if (r) {
                     $.post('api/user/deleteUser', {
                         ID: data[0][1]
@@ -234,14 +236,14 @@ function initModal() {
                                        placeholder="Ngày sinh">
                             </div>
                         </div>
-                        <div class="form-group col-xs-12">
+                        <div class="form-group col-xs-12" id="divUser">
                             <label for="txtUsername" class="control-label">Tên đăng nhập</label>
                             <div class="inner-addon left-addon">
                                 <i aria-hidden="true"></i>
                                 <input name="Username" type="text" class="form-control" id="txtUsername" placeholder="Username">
                             </div>
                         </div>
-                        <div class="form-group col-xs-12">
+                        <div class="form-group col-xs-12" id="divPass">
                             <label for="txtPass" class="control-label">Mật khẩu<span class="require">(*)</span></label>
                             <div class="inner-addon left-addon">
                                 <i class="fa fa-key" aria-hidden="true"></i>

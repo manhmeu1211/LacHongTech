@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {getToken, verifyToken, tinhGhim} = require('../utils');
-const {getAllHangMuc, addWork, addGhim, deleteWork, editWork, getHangMucById, insertDoneWork} = require('../helper');
+const {getAllHangMuc, addWork, addGhim, selectWorkByIdNotOk, baoLoiWork, deleteWork, editWork, getHangMucById, insertDoneWork} = require('../helper');
 const moment = require("moment");
 router.post('/add', (req, res) => {
     let user = verifyToken(req.headers.token);
@@ -56,12 +56,17 @@ router.post('/delete', (req, res) => {
     }
 })
 router.post('/edit', (req, res) => {
+    let statusNotOk = 4;
     let user = verifyToken(req.headers.token);
-    console.log(req.body)
     if (!user.IsAdmin) {
         res.send({
             Status: false,
             Message: "Không có quyền"
+        })
+    } else if (+req.body.Status === 4) {
+        res.send({
+            Status: false,
+            Message: "Không được sửa not ok, vui lòng sử dụng chức năng báo lỗi"
         })
     }
     else {
@@ -81,7 +86,33 @@ router.post('/edit', (req, res) => {
         })
     }
 });
+router.post('/baoloi', (req, res) => {
+    console.log(req.body);
+    let obj = req.body;
+    let user = verifyToken(req.headers.token);
+    if (user && user.ThemDuAn) {
+        obj.IdUser = user.ID;
+        baoLoiWork(obj, (data) => {
+            if (data) {
 
+                res.send({
+                    Status: true,
+                    Message: "Báo lỗi thành công"
+                })
+            } else {
+                res.send({
+                    Status: false,
+                    Message: "Không thể báo cáo trạng thái hạng mục chưa hoàn thành"
+                })
+            }
+        })
+    } else {
+        res.send({
+            Status: false,
+            Message: "Bạn không có quyền thêm dự án hoặc báo lỗi"
+        })
+    }
+});
 router.get('/done/:id', (req, res) => {
     const id = req.params.id;
     let user = verifyToken(req.headers.token);
@@ -100,16 +131,33 @@ router.get('/done/:id', (req, res) => {
             }
         })
         getHangMucById(id, work => {
+            if (work.Status === 4) {
 
-            let SoGhim = tinhGhim(new Date(), work.DeadLine);
-            if (SoGhim > 0) {
-                let obj = {
-                    SoGhim,
-                    IdHangMuc: work.ID,
-                    LyDo: `Chậm deadline hạng mục ${work.HangMuc} Deadline: ${moment(work.DeadLine).format("DD-MM-YYYY HH:mm:ss")}, Xong: ${moment(new Date()).format("DD-MM-YYYY HH:mm:ss")}`,
-                    IdUserTao: user.ID
+                selectWorkByIdNotOk(id, data => {
+                    let SoGhim = tinhGhim(new Date(), data.DeadLine);
+                    if (SoGhim > 0) {
+                        let obj = {
+                            SoGhim,
+                            IdHangMuc: work.ID,
+                            LyDo: `Not Ok hạng mục ${work.HangMuc} Deadline: ${moment(data.DeadLine).format("DD-MM-YYYY HH:mm:ss")}, Xong: ${moment(new Date()).format("DD-MM-YYYY HH:mm:ss")}`,
+                            IdUserTao: user.ID,
+                            Loai: 2
+                        };
+                        addGhim(obj);
+                    }
+                });
+            } else {
+                let SoGhim = tinhGhim(new Date(), work.DeadLine);
+                if (SoGhim > 0) {
+                    let obj = {
+                        SoGhim,
+                        IdHangMuc: work.ID,
+                        LyDo: `Chậm deadline hạng mục ${work.HangMuc} Deadline: ${moment(work.DeadLine).format("DD-MM-YYYY HH:mm:ss")}, Xong: ${moment(new Date()).format("DD-MM-YYYY HH:mm:ss")}`,
+                        IdUserTao: user.ID,
+                        Loai: 1
+                    };
+                    addGhim(obj);
                 }
-                addGhim(obj)
             }
         });
     } else {
@@ -123,6 +171,7 @@ router.get('/done/:id', (req, res) => {
 router.get('/getAll/:id', (req, res) => {
     const id = req.params.id;
     getAllHangMuc(id, data => {
+        console.log(data)
         res.send(data);
     })
 });
@@ -130,9 +179,8 @@ router.get('/getAll/:id', (req, res) => {
 router.get('/get/:id', (req, res) => {
     const id = req.params.id;
     getHangMucById(id, data => {
-        res.send(data[0] || {});
+        res.send(data[0] || data || {});
     })
 });
-
 
 module.exports = router;
