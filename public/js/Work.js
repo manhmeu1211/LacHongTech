@@ -93,7 +93,7 @@ $(document).ready(function () {
     $.get(`api/work/getAll/${getUrlParameter('id')}`, data => {
         console.log(data)
         let arr = data.map(work => {
-            return ["", work.ID, work.HangMuc, work.PhanHe, work.MoTa, work.NgayBatDau, work.DeadLine, work.Status, work.Nguoiyeucau, work.Nguoithuchien, work.IdDuAn]
+            return ["", work.ID, work.HangMuc, work.PhanHe, work.MoTa, work.NgayBatDau, work.DeadLine, work.Status, work.NguoiYeuCau, work.NguoiThucHien, work.IdDuAn]
         })
         console.log(arr)
         example.clear().rows.add(arr).draw();

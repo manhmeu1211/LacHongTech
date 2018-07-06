@@ -119,10 +119,7 @@ router.post("/addUser", (req, res) => {
             })
         } else {
             editUser(req.body, (data) => {
-                res.send({
-                    Status: true,
-                    Messgae: "Thành công!"
-                })
+                res.redirect('/user')
             })
         }
     }
