@@ -20,6 +20,7 @@ router.post('/addDuan', (req, res) => {
         })
     }
 });
+
 router.get('/getAll', (req, res) => {
     getAllDuAn(data => {
         res.send(data)
@@ -45,25 +46,25 @@ router.get('/getAll', (req, res) => {
 // });
 
 //web back-end
-router.post('/add', (req, res) => {
-    let user = verifyToken(req.session.token);
-    if (!user.ThemDuAn) {
-        res.send({
-            Status: false,
-            Message: "Không có quyền thêm dự án"
-        });
-    }
-    else {
-        addDuAn(req.body, (isadd) => {
-            if (isadd) {
-                res.redirect('/duan');
-            } else {
-                res.send({
-                    Status: false,
-                    Massage: "Dự án đã tồn tại!"
-                });
-            }
-        })
-    }
-});
+// router.post('/add', (req, res) => {
+//     let user = verifyToken(req.session.token);
+//     if (!user.ThemDuAn) {
+//         res.send({
+//             Status: false,
+//             Message: "Không có quyền thêm dự án"
+//         });
+//     }
+//     else {
+//         addDuAn(req.body, (isadd) => {
+//             if (isadd) {
+//                 res.redirect('/duan');
+//             } else {
+//                 res.send({
+//                     Status: false,
+//                     Massage: "Dự án đã tồn tại!"
+//                 });
+//             }
+//         })
+//     }
+// });
 module.exports = router;

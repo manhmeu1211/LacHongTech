@@ -14,7 +14,7 @@ const dbConfigOpen = {
     "port": 25433
 };
 
-module.exports = mssql.connect(dbConfigLocal, function (err) {
+module.exports = mssql.connect(dbConfigOpen, function (err) {
     if (err)
         throw err;
     else {

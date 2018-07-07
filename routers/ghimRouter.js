@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {getToken, verifyToken} = require('../utils');
-const {countGhim, selectGhimBetweenTwoDate} = require('../helper');
+const {countGhim, selectGhimBetweenTwoDate, getAllGhim} = require('../helper');
 const moment=require("moment")
 
 router.post('/countGhim', (req, res) => {

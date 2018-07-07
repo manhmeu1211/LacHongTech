@@ -57,6 +57,7 @@ app.use('/api/work', require('./routers/hangmucRouter'));
 app.use('/api/trangthai', require('./routers/trangthaiRouter'));
 app.use('/api/phanhe', require('./routers/phanheRouter'));
 app.use('/api/ghim', require('./routers/ghimRouter'));
+app.use('/api/baocao', require('./routers/baocaoRouter'))
 
 
 app.get('/', (req, res) => {

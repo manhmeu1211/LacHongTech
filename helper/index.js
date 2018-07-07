@@ -80,6 +80,21 @@ function deleteUser(user, callback) {
     })
 }
 
+function updatePass(user, callback) {
+    let {ID, PassNew, PassOld} = user;
+    pool.request()
+        .input('ID', sql.Int, ID)
+        .input('PassNew', sql.VarChar(50), PassNew)
+        .input('PassOld', sql.VarChar(50), PassOld)
+        .execute('usp_Bach_Updatepassword')
+        .then(result => {
+            callback(true)
+        }).catch(err =>{
+            callback(false)
+        console.log(err)
+    })
+}
+
 function addDuAn(duan, callback) {
     let {TenDuAn, NgayTao} = duan;
     pool.request()
@@ -276,7 +291,7 @@ function selectGhimBetweenTwoDate(start = new Date(), end = new Date(), callback
         .then(result => {
             callback(result.recordset)
         }).catch(err => {
-        console.log('Lỗi',err)
+        console.log('Lỗi', err)
 
     })
 }
@@ -285,6 +300,44 @@ function countGhim(ID, callback) {
     pool.request()
         .input('ID', sql.Int, +ID)
         .execute('usp_Bach_Ghim')
+        .then(result => {
+            callback(result.recordset)
+        }).catch(err => {
+        console.log('Lỗi')
+    })
+}
+
+function getAllGhim(callback) {
+    pool.request()
+        .execute('usp_LoaiGhim_Select')
+        .then(result => {
+            callback(result.recordset)
+        }).catch(err => {
+        console.log('lỗi')
+    })
+}
+
+function baoCaoChiTietGhim(TuNgay = new Date(), DenNgay = new Date(), ID, callback) {
+    pool.request()
+        .input('TuNgay', sql.DateTime, TuNgay)
+        .input('DenNgay', sql.DateTime, DenNgay)
+        .input('ID', sql.Int, +ID)
+        .execute('usp_BaoCaoChiTietGhim')
+        .then(result => {
+            callback(result.recordset)
+        }).catch(err => {
+        console.log('Lỗi')
+    })
+}
+
+function baoCaoTHGhim(baocao, callback) {
+    let {TuNgay = new Date(), DenNgay = new Date(), ID, LoaiGhim} = baocao;
+    pool.request()
+        .input('TuNgay', sql.DateTime, TuNgay)
+        .input('DenNgay', sql.DateTime, DenNgay)
+        .input('ID', sql.Int, +ID)
+        .input('LoaiGhim', sql.Int, +LoaiGhim)
+        .execute('usp_BaoCaoTongHopGhim')
         .then(result => {
             callback(result.recordset)
         }).catch(err => {
@@ -347,5 +400,8 @@ module.exports = {
     baoLoiWork,
     selectWorkByIdNotOk,
     queryDataBase,
-    selectGhimBetweenTwoDate
+    selectGhimBetweenTwoDate,
+    getAllGhim,
+    baoCaoChiTietGhim,
+    updatePass,
 }

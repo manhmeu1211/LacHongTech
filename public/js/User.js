@@ -154,7 +154,7 @@ $(document).ready(function () {
             default:
                 alert("Bạn chọn quá nhiều")
         }
-
+    window.location.reload()
 
     })
 
