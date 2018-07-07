@@ -270,9 +270,9 @@ function editWork(work, callback) {
 
 function selectGhimBetweenTwoDate(start = new Date(), end = new Date(), callback) {
     pool.request()
-        .input('start', sql.DateTime, start)
-        .input('end', sql.DateTime, end)
-        .execute('usp_Bach_Ghim')
+        .input('start', sql.NVarChar(250), start)
+        .input('end', sql.NVarChar(250), end)
+        .execute('usp_Ghim_Bach_SelectGhimAllUser')
         .then(result => {
             callback(result.recordset)
         }).catch(err => {

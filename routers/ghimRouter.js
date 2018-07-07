@@ -16,7 +16,8 @@ router.post("/ghimhoiha", (req, res) => {
     if (!user) {
         res.send("Null cmnr")
     } else {
-        selectGhimBetweenTwoDate(moment(Start).format("DD-MM-YYYY HH:mm:ss"), moment(End).format("DD-MM-YYYY HH:mm:ss"), data => {
+        selectGhimBetweenTwoDate(Start, End, data => {
+            console.log(data)
             res.send(data)
         })
     }

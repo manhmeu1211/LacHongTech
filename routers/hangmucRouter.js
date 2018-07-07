@@ -123,6 +123,36 @@ router.get('/done/:id', (req, res) => {
                     Status: true,
                     Message: "Xử lý thành công"
                 })
+                getHangMucById(id, work => {
+                    if (work.Status === 4) {
+
+                        selectWorkByIdNotOk(id, data => {
+                            let SoGhim = tinhGhim(new Date(), data.DeadLine);
+                            if (SoGhim > 0) {
+                                let obj = {
+                                    SoGhim,
+                                    IdHangMuc: work.ID,
+                                    LyDo: `Not Ok hạng mục ${work.HangMuc} Deadline: ${moment(data.DeadLine).format("DD-MM-YYYY HH:mm:ss")}, Xong: ${moment(new Date()).format("DD-MM-YYYY HH:mm:ss")}`,
+                                    IdUserTao: user.ID,
+                                    Loai: 2
+                                };
+                                addGhim(obj);
+                            }
+                        });
+                    } else {
+                        let SoGhim = tinhGhim(new Date(), work.DeadLine);
+                        if (SoGhim > 0) {
+                            let obj = {
+                                SoGhim,
+                                IdHangMuc: work.ID,
+                                LyDo: `Chậm deadline hạng mục ${work.HangMuc} Deadline: ${moment(work.DeadLine).format("DD-MM-YYYY HH:mm:ss")}, Xong: ${moment(new Date()).format("DD-MM-YYYY HH:mm:ss")}`,
+                                IdUserTao: user.ID,
+                                Loai: 1
+                            };
+                            addGhim(obj);
+                        }
+                    }
+                });
             } else {
                 res.send({
                     Status: false,
@@ -130,36 +160,7 @@ router.get('/done/:id', (req, res) => {
                 })
             }
         })
-        getHangMucById(id, work => {
-            if (work.Status === 4) {
 
-                selectWorkByIdNotOk(id, data => {
-                    let SoGhim = tinhGhim(new Date(), data.DeadLine);
-                    if (SoGhim > 0) {
-                        let obj = {
-                            SoGhim,
-                            IdHangMuc: work.ID,
-                            LyDo: `Not Ok hạng mục ${work.HangMuc} Deadline: ${moment(data.DeadLine).format("DD-MM-YYYY HH:mm:ss")}, Xong: ${moment(new Date()).format("DD-MM-YYYY HH:mm:ss")}`,
-                            IdUserTao: user.ID,
-                            Loai: 2
-                        };
-                        addGhim(obj);
-                    }
-                });
-            } else {
-                let SoGhim = tinhGhim(new Date(), work.DeadLine);
-                if (SoGhim > 0) {
-                    let obj = {
-                        SoGhim,
-                        IdHangMuc: work.ID,
-                        LyDo: `Chậm deadline hạng mục ${work.HangMuc} Deadline: ${moment(work.DeadLine).format("DD-MM-YYYY HH:mm:ss")}, Xong: ${moment(new Date()).format("DD-MM-YYYY HH:mm:ss")}`,
-                        IdUserTao: user.ID,
-                        Loai: 1
-                    };
-                    addGhim(obj);
-                }
-            }
-        });
     } else {
         res.send({
             Status: false,
