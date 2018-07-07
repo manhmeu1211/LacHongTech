@@ -404,4 +404,5 @@ module.exports = {
     getAllGhim,
     baoCaoChiTietGhim,
     updatePass,
+    baoCaoTHGhim,
 }

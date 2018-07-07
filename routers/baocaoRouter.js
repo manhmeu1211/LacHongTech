@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {getToken, verifyToken} = require('../utils');
-const {getAllGhim, baoCaoChiTietGhim} = require('../helper');
+const {getAllGhim, baoCaoChiTietGhim, baoCaoTHGhim} = require('../helper');
 
 router.post('/getAllGhim', (req, res) =>{
     let obj = verifyToken(req.headers.token)
@@ -16,7 +16,7 @@ router.post('/baoCaoChiTietGhim', (req, res) =>{
     if (!user) {
         res.send("Null cmnr")
     } else {
-        baoCaoChiTietGhim(moment(Start).format("DD-MM-YYYY HH:mm:ss"), moment(End).format("DD-MM-YYYY HH:mm:ss"), data => {
+        baoCaoChiTietGhim(moment(TuNgay).format("DD-MM-YYYY HH:mm:ss"), moment(DenNgay).format("DD-MM-YYYY HH:mm:ss"), data => {
             res.send(data)
         })
     }
@@ -29,7 +29,7 @@ router.post('/baoCaoTHGhim', (req, res) =>{
     if (!user) {
         res.send("Null cmnr")
     } else {
-        baoCaoTHGhim(moment(Start).format("DD-MM-YYYY HH:mm:ss"), moment(End).format("DD-MM-YYYY HH:mm:ss"), data => {
+        baoCaoTHGhim(moment(TuNgay).format("DD-MM-YYYY HH:mm:ss"), moment(DenNgay).format("DD-MM-YYYY HH:mm:ss"), data => {
             res.send(data)
         })
     }
