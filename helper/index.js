@@ -85,12 +85,12 @@ function updatePass(user, callback) {
     PassNew = md5(PassNew);
     PassOld = md5(PassOld);
     pool.request()
-        .input('ID', sql.Int, ID)
-        .input('PassNew', sql.VarChar(50), PassNew)
-        .input('PassOld', sql.VarChar(50), PassOld)
-        .execute('usp_Bach_Updatepassword')
+        .input('Id', sql.Int, ID)
+        .input('PasswordNew', sql.VarChar(50), PassNew)
+        .input('PasswordOld', sql.VarChar(50), PassOld)
+        .execute('usp_User_Bach_Updatepassword')
         .then(result => {
-            callback(true)
+            callback(result.recordset[0].kq)
         }).catch(err =>{
             callback(false)
         console.log(err)
@@ -315,35 +315,35 @@ function getAllGhim(callback) {
         .then(result => {
             callback(result.recordset)
         }).catch(err => {
-        console.log('lỗi')
+        console.log('lỗi', err)
     })
 }
 
 function baoCaoChiTietGhim(TuNgay = new Date(), DenNgay = new Date(), ID, callback) {
     pool.request()
-        .input('TuNgay', sql.DateTime, TuNgay)
-        .input('DenNgay', sql.DateTime, DenNgay)
-        .input('ID', sql.Int, +ID)
+        .input('TuNgay', sql.NVarChar(250), TuNgay)
+        .input('DenNgay', sql.NVarChar(250), DenNgay)
+        .input('IDUser', sql.Int, +ID)
         .execute('usp_BaoCaoChiTietGhim')
         .then(result => {
             callback(result.recordset)
         }).catch(err => {
-        console.log('Lỗi')
+        console.log('Lỗi', err)
     })
 }
 
 function baoCaoTHGhim(baocao, callback) {
-    let {TuNgay = new Date(), DenNgay = new Date(), ID, LoaiGhim} = baocao;
+    let {TuNgay, DenNgay, ID, IDLoaiGhim} = baocao;
     pool.request()
-        .input('TuNgay', sql.DateTime, TuNgay)
-        .input('DenNgay', sql.DateTime, DenNgay)
-        .input('ID', sql.Int, +ID)
-        .input('LoaiGhim', sql.Int, +LoaiGhim)
+        .input('TuNgay', sql.NVarChar(250), TuNgay)
+        .input('DenNgay', sql.NVarChar(250), DenNgay)
+        .input('IDUser', sql.Int, +ID)
+        .input('LoaiGhim', sql.Int, +IDLoaiGhim)
         .execute('usp_BaoCaoTongHopGhim')
         .then(result => {
             callback(result.recordset)
         }).catch(err => {
-        console.log('Lỗi')
+        console.log('Lỗi', err)
     })
 }
 

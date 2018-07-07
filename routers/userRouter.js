@@ -91,15 +91,23 @@ router.post('/updatepass', (req, res) =>{
     if(!user){
         res.send({
             Status: false,
-            Message: "Mật khẩu nhập đéo đúng hoặc sai user"
+            Message: "Phiên làm việc đã hết hạn"
         })
     }
     else {
         updatePass(req.body, (data) =>{
-            res.send({
-                Status: true,
-                Message : "Đm khẩu thành công"
-            })
+            if (data) {
+                res.send({
+                    Status: true,
+                    Message: "Đổi mật khẩu thành công"
+                })
+            } else {
+                res.send({
+                    Status: false,
+                    Message: "Mật khẩu cũ không đúng vui lòng thử lại"
+                })
+            }
+
         })
     }
 })

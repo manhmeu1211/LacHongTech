@@ -15,7 +15,7 @@ app.set('view engine', 'handlebars');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
-app.listen(6788, () => console.log("Chạy ngay đi trc khi mọi điều tồi tệ hơn ~~~~~~~~"));
+app.listen(process.env.PORT || 6788, () => console.log("Chạy ngay đi trc khi mọi điều tồi tệ hơn ~~~~~~~~"));
 let storage = multer.diskStorage({ //multers disk storage settings
     destination: function (req, file, cb) {
         cb(null, './uploads/')

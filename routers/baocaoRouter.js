@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const {getToken, verifyToken} = require('../utils');
 const {getAllGhim, baoCaoChiTietGhim, baoCaoTHGhim} = require('../helper');
+const moment = require("moment")
 
 router.post('/getAllGhim', (req, res) =>{
     let obj = verifyToken(req.headers.token)
@@ -16,24 +17,24 @@ router.post('/baoCaoChiTietGhim', (req, res) =>{
     if (!user) {
         res.send("Null cmnr")
     } else {
-        baoCaoChiTietGhim(moment(TuNgay).format("DD-MM-YYYY HH:mm:ss"), moment(DenNgay).format("DD-MM-YYYY HH:mm:ss"), data => {
+        baoCaoChiTietGhim(TuNgay, DenNgay, ID, data => {
+            console.log(data)
             res.send(data)
         })
     }
 });
 
 router.post('/baoCaoTHGhim', (req, res) =>{
-    let {baocao} = req.body;
+    let {TuNgay, DenNgay, ID_User, ID_LoaiGhim} = req.body;
     console.log(req.body)
     let user = verifyToken(req.headers.token);
     if (!user) {
         res.send("Null cmnr")
     } else {
-        baoCaoTHGhim(moment(TuNgay).format("DD-MM-YYYY HH:mm:ss"), moment(DenNgay).format("DD-MM-YYYY HH:mm:ss"), data => {
+        baoCaoTHGhim(req.body, data => {
             res.send(data)
         })
     }
 });
-
 
 module.exports = router;
