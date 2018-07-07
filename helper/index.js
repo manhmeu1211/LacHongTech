@@ -82,6 +82,8 @@ function deleteUser(user, callback) {
 
 function updatePass(user, callback) {
     let {ID, PassNew, PassOld} = user;
+    PassNew = md5(PassNew);
+    PassOld = md5(PassOld);
     pool.request()
         .input('ID', sql.Int, ID)
         .input('PassNew', sql.VarChar(50), PassNew)
