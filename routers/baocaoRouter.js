@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {getToken, verifyToken} = require('../utils');
-const {getAllGhim, baoCaoChiTietGhim, baoCaoTHGhim} = require('../helper');
+const {getAllGhim, baoCaoChiTietGhim, baoCaoTHGhim, baocaoTongHoptheoNgay} = require('../helper');
 const moment = require("moment")
 
 router.post('/getAllGhim', (req, res) =>{
@@ -36,5 +36,14 @@ router.post('/baoCaoTHGhim', (req, res) =>{
         })
     }
 });
-
+router.post('/baocaoththeongay', (req, res) => {
+    let user = verifyToken(req.headers.token);
+    if (!user) {
+        res.send("Null cmnr")
+    } else {
+        baocaoTongHoptheoNgay(req.body, data => {
+            res.send(data)
+        })
+    }
+});
 module.exports = router;

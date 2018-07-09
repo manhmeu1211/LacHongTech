@@ -347,6 +347,20 @@ function baoCaoTHGhim(baocao, callback) {
     })
 }
 
+function baocaoTongHoptheoNgay(baocao, callback) {
+    let {TuNgay, DenNgay} = baocao;
+    pool.request()
+        .input('TuNgay', sql.NVarChar(250), TuNgay)
+        .input('DenNgay', sql.NVarChar(250), DenNgay)
+        .execute('usp_BieuDo_TongHopGhimTheoNgay')
+        .then(result => {
+            callback(result.recordset)
+        }).catch(err => {
+        console.log('Lỗi', err)
+    })
+}
+
+
 function selectWorkByIdNotOk(id, callback) {
     pool.request()
         .input('ID', sql.Int, id)
@@ -407,4 +421,5 @@ module.exports = {
     baoCaoChiTietGhim,
     updatePass,
     baoCaoTHGhim,
+    baocaoTongHoptheoNgay
 }
