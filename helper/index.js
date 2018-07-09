@@ -187,7 +187,6 @@ function addWork(work, callback) {
         .input('Hangmuc', sql.NVarChar(50), HangMuc)
         .input('Phanhe', sql.NVarChar(50), PhanHe)
         .input('Mota', sql.NVarChar(1000), MoTa)
-        .input('Ngaybatdau', sql.Date, NgayBatDau)
         .input('Deadline', sql.Date, Deadline)
         .input('Trangthai', sql.Int, Status)
         .input('Nguoiyeucau', sql.NVarChar(150), NguoiYeuCau)

@@ -6,6 +6,7 @@ router.post('/add', (req, res) => {
     let user = verifyToken(req.headers.token);
     console.log(req.body);
     let {body} = req;
+
     if (!user.ThemDuAn) {
         res.send({
             Status: false,
@@ -13,6 +14,7 @@ router.post('/add', (req, res) => {
         });
     }
     else {
+        const obj = {...body, NguoiYeuCau: user.ID}
         addWork(req.body, (isadd) => {
             if (isadd) {
                 res.send({
