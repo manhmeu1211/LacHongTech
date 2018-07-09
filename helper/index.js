@@ -44,6 +44,7 @@ function addUser(user, callback) {
             const {kq} = result.recordset[0]
             callback(kq)
         }).catch(err => {
+        console.log(err)
     })
 }
 
