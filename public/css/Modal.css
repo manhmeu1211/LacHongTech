@@ -12,7 +12,7 @@ div.modal .modal-header {
 }
 
 div.modal .modal-body {
-    height: 515px;
+    height: auto;
     padding: 0 0 10px 20px;
 }
 

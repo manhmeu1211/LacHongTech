@@ -97,6 +97,10 @@ app.get('/duan', (req, res) => {
         res.render('duan')
     });
 });
+app.get('/logout', (req, res) => {
+   req.session.token=null;
+   res.redirect('/')
+});
 app.get('/work', (req, res) => {
     const id = req.query.id;
     getAllHangMuc(id, data => {

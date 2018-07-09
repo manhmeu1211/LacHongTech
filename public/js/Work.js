@@ -54,14 +54,16 @@ $(document).ready(function () {
             {
                 "width": "15%",
                 "targets": 5,
-                "render": function ( data, type, row ) {
-                    return moment(data).format('DD-MM-YYYY HH:mm:ss')}
+                "render": function (data, type, row) {
+                    return moment(data).format('DD-MM-YYYY HH:mm:ss')
+                }
             },
             {
                 "width": "15%",
                 "targets": 6,
-                "render": function ( data, type, row ) {
-                    return moment(data).format('DD-MM-YYYY HH:mm:ss')}
+                "render": function (data, type, row) {
+                    return moment(data).format('DD-MM-YYYY HH:mm:ss')
+                }
             },
             {
                 "width": "15%",
@@ -86,11 +88,6 @@ $(document).ready(function () {
             $('#header th:nth-child(1)').addClass('sorting_disabled');
         });
     });
-    example.on('order.dt search.dt', function () {
-        example.column(1, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
-            cell.innerHTML = i + 1;
-        });
-    }).draw();
     $.get(`api/work/getAll/${getUrlParameter('id')}`, data => {
         console.log(data)
         let arr = data.map(work => {
@@ -105,20 +102,18 @@ $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
     $('#btnAddHangMuc').click(function (e) {
         $('#AddEditEmployeePopup').modal();
-        let arr = ["dungva", "he", "ha", "hu"];
-        let options = arr.map(i => {
-            if (i === "dungva")
-                return `<option selected>${i}</option>`
-            else return `<option >${i}</option>`
-        })
-        $('#txtTenCt').html(options.join(" "))
-    });
-    $('#example').on('dblclick', 'tr', function (e) {
-        const mact = example.row(this).data();
-        console.log(mact);
+        $.get(`api/trangthai/getAll`, data => {
+            console.log(data)
+            let arr = data.map(trangthai => {
+                return `<option>${trangthai.TenTrangThai}</option>`
+            });
+            $('#txtStatus').html( arr.join(" "))
+        });
     });
 
+
 });
+
 function getUrlParameter(sParam) {
     let sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
@@ -133,12 +128,13 @@ function getUrlParameter(sParam) {
         }
     }
 }
+
 function initModal() {
     let now = moment().format('YYYY-MM-DD');
     $('#page-popup').html(`<div id="AddEditEmployeePopup" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content" >
-                <form id="frmAddCompany" class="form-horizontal" method="post" action="router/company">
+                <form id="frmAddCompany" class="form-horizontal" method="post" action="">
                 <input name="type" id="type" class="hidden" value="add">
                 <input name="mactOld" id="mactOld" class="hidden">
                     <div class="modal-header" style="border-bottom: 0px">
@@ -147,17 +143,62 @@ function initModal() {
                     </div>
                     <div class="modal-body" >
                         <div class="form-group col-xs-12">
-                            <label for="txtTenCt" class="control-label" style="margin-top: 8px">Tên công ty <span
+                            <label for="txtHangMuc" class="control-label" style="margin-top: 8px">Hạng Mục<span
                                     class="require">(*)</span></label>
                             <div class="inner-addon left-addon">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                                <select name="tenct" class="form-control" id="txtTenCt">
-                                        
+                               <input name="HangMuc" type="text" class="form-control" id="txtHangMuc">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12">
+                            <label for="txtPhanHe" class="control-label">Phân hệ<span
+                                    class="require">(*)</span></label>
+                            <div class="inner-addon left-addon">
+                                <input name="PhanHe" type="text" class="form-control" id="txtPhanHe">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12">
+                            <label for="txtMoTa" class="control-label">Mô Tả<span
+                                    class="require">(*)</span></label>
+                            <div class="inner-addon left-addon">
+                                <input name="MoTa" type="text" class="form-control" id="txtMoTa">
+                            </div>
+                        </div>   
+                        <div class="form-group col-xs-12">
+                            <label for="txtNgayBatDau" class="control-label">Ngày bắt đầu<span
+                                    class="require">(*)</span></label>
+                            <div class="inner-addon left-addon">
+                                <input name="NgayBatDau" type="date" value="${now}" class="form-control" id="txtNgayBatDau">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12">
+                            <label for="txtDeadLine" class="control-label">DeadLine<span
+                                    class="require">(*)</span></label>
+                            <div class="inner-addon left-addon">
+                                <input name="DeadLine" type="date" value="${now}" class="form-control" id="txtDeadLine">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12">
+                            <label for="txtStatus" class="control-label">Status</label>
+                            <div class="inner-addon left-addon">
+                                <select name="Status" class="form-control" id="txtStatus" >
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12">
+                            <label for="txtNguoiThucHien" class="control-label">Người Thực Hiện</label>
+                            <div class="inner-addon left-addon">
+                                <select name="NguoiThucHien" class="form-control" id="txtNguoiThucHien" >
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12">
+                            <label for="txtTenDuAn" class="control-label">Tên Dự Án</label>
+                            <div class="inner-addon left-addon">
+                                <select name="TenDuAn" class="form-control" id="txtTenDuAn" >
                                 </select>
                             </div>
                         </div>
                         
-                    </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" id="btnSave" data-toggle="tooltip"
                                 data-placement="bottom" title="Lưu lại">
