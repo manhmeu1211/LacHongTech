@@ -98,7 +98,7 @@ function updatePass(user, callback) {
 }
 
 function addDuAn(duan, callback) {
-    let {TenDuAn, NgayTao} = duan;
+    let {TenDuAn} = duan;
     pool.request()
         .input('tenDuAn', sql.NVarChar(100), TenDuAn)
         .execute('usp_DuAn_Bach_Insert')
