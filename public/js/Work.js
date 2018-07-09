@@ -48,10 +48,9 @@ $(document).ready(function () {
             },
             {
                 "width": "15%",
-                "targets": 4,
-                "render": function ( data, type, row ) {
-                    return moment(data).format('DD-MM-YYYY HH:mm:ss')}
-            },
+                "targets": 4
+            }
+            ,
             {
                 "width": "15%",
                 "targets": 5,
@@ -60,7 +59,9 @@ $(document).ready(function () {
             },
             {
                 "width": "15%",
-                "targets": 6
+                "targets": 6,
+                "render": function ( data, type, row ) {
+                    return moment(data).format('DD-MM-YYYY HH:mm:ss')}
             },
             {
                 "width": "15%",
@@ -93,7 +94,7 @@ $(document).ready(function () {
     $.get(`api/work/getAll/${getUrlParameter('id')}`, data => {
         console.log(data)
         let arr = data.map(work => {
-            return ["", work.ID, work.HangMuc, work.PhanHe, work.MoTa, work.NgayBatDau, work.DeadLine, work.Status, work.NguoiYeuCau, work.NguoiThucHien, work.IdDuAn]
+            return ["", work.ID, work.HangMuc, work.PhanHe, work.MoTa, work.NgayBatDau, work.Deadline, work.Status, work.NguoiYeuCau, work.NguoiThucHien, work.TenDuAn]
         })
         console.log(arr)
         example.clear().rows.add(arr).draw();
