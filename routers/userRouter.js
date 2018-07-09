@@ -117,80 +117,80 @@ router.post('/updatepass', (req, res) =>{
 //web
 
 
-// router.post("/addUser", (req, res) => {
-//     let user = verifyToken(req.session.token);
-//     let type = req.body.type;
-//     if (type === 'add') {
-//         if (!user.IsAdmin) {
-//             res.send({
-//                 Status: false,
-//                 Message: "Không có quyền admin"
-//             });
-//         } else {
-//             addUser(req.body, (isAdd) => {
-//                 if (isAdd) {
-//                     res.redirect('/user');
-//                 } else {
-//                     res.send({
-//                         Status: false,
-//                         Message: "Username đã tồn tại,thử lại với username khác"
-//                     });
-//                 }
-//             })
-//         }
-//     }
-//     else if (type === 'edit') {
-//         if (!user.IsAdmin && user.ID !== ID) {
-//             res.send({
-//                 Status: false,
-//                 Messgae: "Bạn không có quyền để chỉnh sửa user này!"
-//             })
-//         } else {
-//             editUser(req.body, (data) => {
-//                 res.redirect('/user')
-//             })
-//         }
-//     }
-// });
-// router.get('/get/:id', (req, res) => {
-//     // tra ve thong tin cho client theo id
-//     // cai nay get thoai mai nen can bao mat, neu k bao mat thi co the tan cong dictionary lay het user
-//     //phai check user lay
-//     let user = verifyToken(req.session.token);
-//     if (!user.IsAdmin) {
-//         res.send({
-//             Status: false,
-//             Message: "Đéo có quyền lấy",
-//             User: null
-//         })
-//     } else {
-//         let id = req.params.id;
-//         selectUserByID(id,(data)=>{
-//             res.send({
-//                 Status: true,
-//                 Message: "Xu ly thanh cong",
-//                 User: data
-//             })
-//         })
-//     }
-// });
-//
-// router.post("/deleteUser", (req, res) => {
-//     let user = verifyToken(req.session.token);
-//     let {ID} = req.body;
-//     if (!user.IsAdmin || user.ID === +ID) {
-//         res.send({
-//             Status: false,
-//             Message: "Bạn không có quyền để xóa user này!"
-//         })
-//     } else {
-//         deleteUser(req.body, (data) => {
-//             res.send({
-//                 Status: true,
-//                 Message: "Xóa ok!"
-//             })
-//         })
-//     }
-// });
+router.post("/addUser", (req, res) => {
+    let user = verifyToken(req.session.token);
+    let type = req.body.type;
+    if (type === 'add') {
+        if (!user.IsAdmin) {
+            res.send({
+                Status: false,
+                Message: "Không có quyền admin"
+            });
+        } else {
+            addUser(req.body, (isAdd) => {
+                if (isAdd) {
+                    res.redirect('/user');
+                } else {
+                    res.send({
+                        Status: false,
+                        Message: "Username đã tồn tại,thử lại với username khác"
+                    });
+                }
+            })
+        }
+    }
+    else if (type === 'edit') {
+        if (!user.IsAdmin && user.ID !== ID) {
+            res.send({
+                Status: false,
+                Messgae: "Bạn không có quyền để chỉnh sửa user này!"
+            })
+        } else {
+            editUser(req.body, (data) => {
+                res.redirect('/user')
+            })
+        }
+    }
+});
+router.get('/get/:id', (req, res) => {
+    // tra ve thong tin cho client theo id
+    // cai nay get thoai mai nen can bao mat, neu k bao mat thi co the tan cong dictionary lay het user
+    //phai check user lay
+    let user = verifyToken(req.session.token);
+    if (!user.IsAdmin) {
+        res.send({
+            Status: false,
+            Message: "Đéo có quyền lấy",
+            User: null
+        })
+    } else {
+        let id = req.params.id;
+        selectUserByID(id,(data)=>{
+            res.send({
+                Status: true,
+                Message: "Xu ly thanh cong",
+                User: data
+            })
+        })
+    }
+});
+
+router.post("/deleteUser", (req, res) => {
+    let user = verifyToken(req.session.token);
+    let {ID} = req.body;
+    if (!user.IsAdmin || user.ID === +ID) {
+        res.send({
+            Status: false,
+            Message: "Bạn không có quyền để xóa user này!"
+        })
+    } else {
+        deleteUser(req.body, (data) => {
+            res.send({
+                Status: true,
+                Message: "Xóa ok!"
+            })
+        })
+    }
+});
 
 module.exports = router;
