@@ -101,7 +101,6 @@ function addDuAn(duan, callback) {
     let {TenDuAn, NgayTao} = duan;
     pool.request()
         .input('tenDuAn', sql.NVarChar(100), TenDuAn)
-        .input('NgayTao', sql.Date, NgayTao)
         .execute('usp_DuAn_Bach_Insert')
         .then(result => {
             callback(true)
@@ -348,12 +347,13 @@ function baoCaoTHGhim(baocao, callback) {
 }
 
 function baocaoTongHoptheoNgay(baocao, callback) {
-    let {TuNgay, DenNgay} = baocao;
+    let {Start, End} = baocao;
     pool.request()
-        .input('TuNgay', sql.NVarChar(250), TuNgay)
-        .input('DenNgay', sql.NVarChar(250), DenNgay)
+        .input('TuNgay', sql.NVarChar(250), Start)
+        .input('DenNgay', sql.NVarChar(250), End)
         .execute('usp_BieuDo_TongHopGhimTheoNgay')
         .then(result => {
+            console.log(result.recordset)
             callback(result.recordset)
         }).catch(err => {
         console.log('Lỗi', err)

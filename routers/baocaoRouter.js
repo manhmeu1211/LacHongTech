@@ -41,8 +41,11 @@ router.post('/baocaoththeongay', (req, res) => {
     if (!user) {
         res.send("Null cmnr")
     } else {
+        console.log(req.body)
         baocaoTongHoptheoNgay(req.body, data => {
-            res.send(data)
+            res.send(data.map(i => {
+                return {...i, TimeByDay: moment(i.TimeByDay).format("DD-MM-YYYY")}
+            }))
         })
     }
 });
