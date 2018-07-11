@@ -113,8 +113,8 @@ $(document).ready(function () {
         $('#AddEditEmployeePopup').modal();
     });
     $('#btnEditUser').click(function (e) {
-        jQuery('#divUser').addClass('hidden').removeClass('form-group col-xs-12');
-        jQuery('#divPass').addClass('hidden').removeClass('form-group col-xs-12');
+        $('#divUser').addClass('hidden').removeClass('form-group col-xs-12');
+        $('#divPass').addClass('hidden').removeClass('form-group col-xs-12');
         $('#type').val("edit");
         $('#titleModal').text("Sửa nhân viên");
 

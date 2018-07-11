@@ -186,6 +186,84 @@ router.get('/get/:id', (req, res) => {
     })
 });
 
+router.post("/addWork", (req, res) => {
+    let user = verifyToken(req.session.token);
+    let type = req.body.type;
+    if (type === 'add') {
+        if (!user.ThemDuAN) {
+            res.send({
+                Status: false,
+                Message: "Không có quyền thêm dự án"
+            });
+        } else {
+            addWork(req.body, (isAdd) => {
+                if (isAdd) {
+                    res.send({
+                        Status: True,
+                        Message: "Thêm thành công"
+                    })
+                } else {
+                    res.send({
+                        Status: false,
+                        Message: "Công việc đã tồn tại!"
+                    });
+                }
+            })
+        }
+    }
+    else if (type === 'edit') {
+        if (!user.ThemDuAN) {
+            res.send({
+                Status: false,
+                Messgae: "Bạn không có quyền để chỉnh sửa công việc này!"
+            })
+        } else {
+            editWork(req.body, (data) => {
+                res.send({
+                    Status: True,
+                    Message: "sửa thành công"
+                })
+            })
+        }
+    }
+});
 
+router.get('/gethangmuc/:id', (req, res) => {
+    let user = verifyToken(req.session.token);
+    if (!user.ThemDuAN) {
+        res.send({
+            Status: false,
+            Message: "Không có quyền lấy",
+            Work: null
+        })
+    } else {
+        let id = req.params.id;
+        getHangMucById(id,(data)=>{
+            res.send({
+                Status: true,
+                Message: "Xu ly thanh cong",
+                Work: data
+            })
+        })
+    }
+});
+
+router.post("/deleteWork", (req, res) => {
+    let user = verifyToken(req.session.token);
+    let {ID} = req.body;
+    if (!user.ThemDuAn) {
+        res.send({
+            Status: false,
+            Message: "Bạn không có quyền để xóa công việc này!"
+        })
+    } else {
+        deleteWork(req.body, (data) => {
+            res.send({
+                Status: true,
+                Message: "Xóa ok!"
+            })
+        })
+    }
+});
 
 module.exports = router;

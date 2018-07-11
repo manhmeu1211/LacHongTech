@@ -86,31 +86,32 @@ $(document).ready(function () {
 });
 function initModal() {
     let now = moment().format('YYYY-MM-DD');
-    $('#page-popup').html(`<div id="AddEditEmployeePopup" class="modal fade" role="dialog">
+    $('#page-popup').html(`
+    <div id="AddEditEmployeePopup" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content" >
-                <form id="frmAddCompany" class="form-horizontal" method="post" action="/api/duan/add">
+                <form id="frmAddCompany" class="form-horizontal" method="post" action="api/duan/add">
                 <input name="type" id="type" class="hidden" value="add">
+                <input name="mactOld" id="mactOld" class="hidden">
                     <div class="modal-header" style="border-bottom: 0px">
                         <button type="button" class="close" data-dismiss="modal"></button>
-                        <h2 id="titleModal" class="modal-title">Thêm mới dự án</h2>
+                        <h2 id="titleModal" class="modal-title">Thêm dự án</h2>
                     </div>
                     <div class="modal-body" >
                         <div class="form-group col-xs-12">
                             <label for="txtTenDuAn" class="control-label" style="margin-top: 8px">Tên dự án<span
                                     class="require">(*)</span></label>
                             <div class="inner-addon left-addon">
-                                <i aria-hidden="true"></i>
-                                <input name="TenDuAn" type="text" class="form-control" id="txtTenDuAn">
+                               <input name="TenDuAn" type="text" class="form-control" id="txtTenDuAn">
                             </div>
                         </div>
                         <div class="form-group col-xs-12">
-                            <label for="txtNgayTao" class="control-label">Ngày Tạo<span
+                            <label for="txtNgayTao" class="control-label">Ngày tạo<span
                                     class="require">(*)</span></label>
                             <div class="inner-addon left-addon">
-                                <i class="fa fa-check-square" aria-hidden="true"></i>
                                 <input name="NgayTao" type="date" value="${now}" class="form-control" id="txtNgayTao">
                             </div>
+                        </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" id="btnSave" data-toggle="tooltip"
                                 data-placement="bottom" title="Lưu lại">

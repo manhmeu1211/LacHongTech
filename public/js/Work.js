@@ -101,7 +101,9 @@ $(document).ready(function () {
     $('#header th:nth-child(1)').addClass('sorting_disabled');
     $('[data-toggle="tooltip"]').tooltip();
     $('#btnAddHangMuc').click(function (e) {
-        $('#AddEditEmployeePopup').modal();
+        $('#titleModal').text("Thêm mới công việc");
+        $('#type').val("add");
+        $('#AddEditEmployeePopup').modal()
         $.get(`api/trangthai/getAll`, data => {
             console.log(data)
             let arr = data.map(trangthai => {
@@ -109,9 +111,95 @@ $(document).ready(function () {
             });
             $('#txtStatus').html( arr.join(" "))
         });
+        $.get('api/user/getAll', data => {
+            let arr = data.map(user => {
+                return `<option>${user.Name}</option>`
+            });
+            $('#txtNguoiThucHien').html(arr.join(" "))
+        });
+        $.get('api/duan/getAll', data => {
+            let arr = data.map(duan => {
+                return `<option>${duan.TenDuAn}</option>`
+            });
+            $('#txtTenDuAn').html(arr.join(" "))
+        });
+
     });
 
+    $('#btnEditHangmuc').click(function (e) {
+        $('#divTenDuAn').addClass('hidden').removeClass('form-group col-xs-12');
+        $('#titleModal').text("Sửa công việc");
+        $('#type').val("edit");
+        $('#AddEditEmployeePopup').modal()
+        $.get(`api/trangthai/getAll`, data => {
+            console.log(data)
+            let arr = data.map(trangthai => {
+                return `<option>${trangthai.TenTrangThai}</option>`
+            });
+            $('#txtStatus').html( arr.join(" "))
+        });
+        $.get('api/user/getAll', data => {
+            let arr = data.map(user => {
+                return `<option>${user.Name}</option>`
+            });
+            $('#txtNguoiThucHien').html(arr.join(" "))
+        });
 
+        let data = example.rows('.selected').data();
+        switch (data.length) {
+            case 0:
+                alert("Bạn chưa chọn?")
+            case 1:
+                const id = data[0][1];
+                editwork(id);
+                break;
+            default:
+                alert("Bạn chọn quá nhiều")
+        }
+    });
+
+    function editwork(id) {
+        $.get('api/work/gethangmuc/' + id, data => {
+            console.log(data)
+            if (data.Status) {
+                const hangmuc = data.Work;
+                $('#txtHangMuc').val(hangmuc.HangMuc);
+                $('#txtPhanHe').val(hangmuc.PhanHe);
+                $('#txtMoTa').val(hangmuc.MoTa);
+                $('#txtNgayBatDau').val(hangmuc.NgayBatDau.format('YYYY-MM-DD'));
+                $('#txtDeadLine').val(hangmuc.Deadline.format('YYYY-MM-DD'));
+                $('#AddEditEmployeePopup').modal()
+            } else {
+                alert("Không có quyền sửa")
+            }
+        })
+    }
+
+    $('#btnDeleteHangmuc').click(function (e) {
+        let data = example.rows('.selected').data();
+        switch (data.length) {
+            case 0:
+                alert("Bạn chưa chọn?")
+                break;
+            case 1:
+                let r = confirm("Bạn thực sự muốn xóa!");
+                if (r) {
+                    $.post('api/work/deleteWork', {
+                        ID: data[0][1]
+                    }, function (data) {
+                        console.log(data)
+                        alert(data.Message)
+                        window.location.reload();
+                    })
+                }
+
+                break;
+            default:
+                alert("Bạn chọn quá nhiều")
+        }
+        window.location.reload()
+
+    })
 });
 
 function getUrlParameter(sParam) {
@@ -134,12 +222,12 @@ function initModal() {
     $('#page-popup').html(`<div id="AddEditEmployeePopup" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content" >
-                <form id="frmAddCompany" class="form-horizontal" method="post" action="">
+                <form id="frmAddCompany" class="form-horizontal" method="post" action="api/work/addWork">
                 <input name="type" id="type" class="hidden" value="add">
                 <input name="mactOld" id="mactOld" class="hidden">
                     <div class="modal-header" style="border-bottom: 0px">
                         <button type="button" class="close" data-dismiss="modal"></button>
-                        <h2 id="titleModal" class="modal-title">Thêm mới công ty</h2>
+                        <h2 id="titleModal" class="modal-title"></h2>
                     </div>
                     <div class="modal-body" >
                         <div class="form-group col-xs-12">
@@ -191,7 +279,7 @@ function initModal() {
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group col-xs-12">
+                        <div class="form-group col-xs-12" id="divTenDuAn">
                             <label for="txtTenDuAn" class="control-label">Tên Dự Án</label>
                             <div class="inner-addon left-addon">
                                 <select name="TenDuAn" class="form-control" id="txtTenDuAn" >
