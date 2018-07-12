@@ -3,17 +3,17 @@ const {getToken, verifyToken} = require('../utils');
 const {getAllGhim, baoCaoChiTietGhim, baoCaoTHGhim, baocaoTongHoptheoNgay} = require('../helper');
 const moment = require("moment")
 
-router.post('/getAllGhim', (req, res) =>{
+router.post('/getAllGhim', (req, res) => {
     let obj = verifyToken(req.headers.token)
     getAllGhim((data) => {
         res.send(data)
     })
 })
 
-router.post('/baoCaoChiTietGhim', (req, res) =>{
+router.post('/baoCaoChiTietGhim', (req, res) => {
     let {TuNgay, DenNgay, ID} = req.body;
     console.log(req.body)
-    let user = verifyToken(req.headers.token);
+    let user = verifyToken(req.headers.token) || verifyToken(req.session.token);
     if (!user) {
         res.send("Null cmnr")
     } else {
@@ -24,7 +24,7 @@ router.post('/baoCaoChiTietGhim', (req, res) =>{
     }
 });
 
-router.post('/baoCaoTHGhim', (req, res) =>{
+router.post('/baoCaoTHGhim', (req, res) => {
     let {TuNgay, DenNgay, ID_User, ID_LoaiGhim} = req.body;
     console.log(req.body)
     let user = verifyToken(req.headers.token);
@@ -50,10 +50,10 @@ router.post('/baocaoththeongay', (req, res) => {
     }
 });
 
-router.post('/baoCaoChiTiet', (req, res) =>{
+router.post('/baoCaoChiTiet', (req, res) => {
     let {TuNgay, DenNgay, ID} = req.body;
     console.log(req.body)
-    let user = verifyToken(req.session.token);
+    let user = verifyToken(req.session.token) || verifyToken(req.session.token);
     if (!user) {
         res.send("Null cmnr")
     } else {

@@ -1,7 +1,62 @@
 $(document).ready(function () {
+    function getBaocao() {
+        let from = $('#daterange').data('daterangepicker').startDate._d;
+        let to = $('#daterange').data('daterangepicker').endDate._d;
+        to = moment(to).format('YYYY-MM-DD HH:mm:ss');
+        from = moment(from).format('YYYY-MM-DD HH:mm:ss');
+        $.post('api/baocao/baoCaoChiTiet', {TuNgay: from, DenNgay: to, ID: 0}, function (data) {
+            let arr = data.map(baocao => {
+                return ["", baocao.HangMuc, baocao.MoTa, baocao.LyDo, baocao.TenLoai, baocao.SoGhim, baocao.Name, baocao.Tien]
+            })
+            console.log(arr)
+            example.clear().rows.add(arr).draw();
+
+        });
+    }
     $('#example thead tr:nth-child(1) th').not(":nth-child(1)").not(":nth-child(2)").each(function () {
         let title = $('#example thead th').eq($(this).index()).text();
         $(this).html('<input type="text" style="width:100%" ' + title + '" />');
+    });
+    $('#daterange').daterangepicker({
+        opens: 'center',
+        locale: locale = {
+            "format": "DD/MM/YYYY",
+            "separator": " - ",
+            "applyLabel": "OK",
+            "cancelLabel": "Hủy",
+            "fromLabel": "Từ",
+            "toLabel": "Đến",
+            "customRangeLabel": "Chọn thời gian",
+            "daysOfWeek": [
+                "CN",
+                "Hai",
+                "Ba",
+                "Tư",
+                "Năm",
+                "Sáu",
+                "Bảy"
+            ],
+            "monthNames": [
+                "Tháng 1",
+                "Tháng 2",
+                "Tháng 3",
+                "Tháng 4",
+                "Tháng 5",
+                "Tháng 6",
+                "Tháng 7",
+                "Tháng 8",
+                "Tháng 9",
+                "Tháng 10",
+                "Tháng 11",
+                "Tháng 12"
+            ],
+            "firstDay": 1
+        },
+        startDate: moment(),
+        endDate: moment(),
+    }, function (start, end, label) {
+        console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        getBaocao()
     });
     let example = $('#example').DataTable({
         "scrollY": "375px",
@@ -64,34 +119,12 @@ $(document).ready(function () {
 
 
 
-    $.get('api/user/getAll', data => {
-        let arr = data.map(user => {
-            return `<option>${user.Name}</option>`
-        });
-        $('#txtNguoiThucHien').html(arr.join(" "))
-    });
-
     $('#header').prependTo('#thead1');
     $('#header th:nth-child(1)').removeClass('sorting_asc');
     $('#header th:nth-child(1)').addClass('sorting_disabled');
     $('[data-toggle="tooltip"]').tooltip();
     $('#btnLoc').click(function (e) {
-        document.getElementById("TuNgay").addEventListener("change", function() {
-            let input = this.value;
-            let tungay = new Date(input);
-        });
-        document.getElementById("DenNgay").addEventListener("change", function() {
-            let input = this.value;
-            let denngay = new Date(input);
-        });
-
-        $.get('api/baocao/baoCaoChiTiet' + tungay,denngay,id, data => {
-            let arr = data.map(baocao => {
-                return ["", baocao.HangMuc, baocao.MoTa, baocao.LyDo, baocao.TenLoai, baocao.SoGhim, baocao.Name, baocao.Tien]
-            })
-            console.log(arr)
-            example.clear().rows.add(arr).draw();
-        });
+        getBaocao()
     })
 });
 
