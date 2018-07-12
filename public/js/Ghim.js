@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    initModal();
     $('#example thead tr:nth-child(1) th').not(":nth-child(1)").not(":nth-child(2)").each(function () {
         let title = $('#example thead th').eq($(this).index()).text();
         $(this).html('<input type="text" style="width:100%" ' + title + '" />');
@@ -14,60 +13,41 @@ $(document).ready(function () {
         data: [],
         "order": [],
         columns: [
-            {title: ""},
-            {title: "ID"},
             {title: "Tên hạng mục"},
+            {title: "Mô tả"},
             {title: "Lý do"},
-            {title: "Số ghim"},
-            {title: "Ngày tạo"},
-            {title: "User tạo"},
-            {title: "User nhận"},
             {title: "Loại ghim"},
+            {title: "Số ghim"},
+            {title: "User nhận"},
+            {title: "Thành tiền"}
         ],
-        columnDefs: [{
-            orderable: false,
-            "width": "5%",
-            "className": 'select-checkbox',
-            "defaultContent": "-",
-            "targets": 0
-            },
+        columnDefs: [
             {
                 orderable: false,
                 "width": "5%",
+                "targets": 0
+            },
+            {
+                "width": "30%",
                 "targets": 1
             },
             {
                 "width": "30%",
                 "targets": 2
-            },
-            {
+            },{
                 "width": "30%",
                 "targets": 3
             },{
                 "width": "30%",
                 "targets": 4
-            },{
+            },
+            {
                 "width": "30%",
                 "targets": 5
             },
             {
                 "width": "30%",
-                "targets": 6,
-                "render": function ( data, type, row ) {
-                    return moment(data).format('DD-MM-YYYY HH:mm:ss');
-                }
-            },
-            {
-                "width": "30%",
-                "targets": 7
-            },
-            {
-                "width": "30%",
-                "targets": 8
-            },
-            {
-                "width": "30%",
-                "targets": 9
+                "targets": 6
             }
         ]
     });
@@ -82,19 +62,36 @@ $(document).ready(function () {
         });
     });
 
-    $.get('api/duan/getAll', data => {
-        let arr = data.map(duan => {
-            return ["", duan.ID, duan.TenDuAn, duan.NgayTao,duan.ID]
-        })
-        console.log(arr)
-        example.clear().rows.add(arr).draw();
-    });
-    $('#example').on('dblclick', 'tr', function (e) {
-        const id = example.row(this).data()[1];
-        window.location.href=`/work?id=${id}`
+
+
+    $.get('api/user/getAll', data => {
+        let arr = data.map(user => {
+            return `<option>${user.Name}</option>`
+        });
+        $('#txtNguoiThucHien').html(arr.join(" "))
     });
 
     $('#header').prependTo('#thead1');
     $('#header th:nth-child(1)').removeClass('sorting_asc');
     $('#header th:nth-child(1)').addClass('sorting_disabled');
     $('[data-toggle="tooltip"]').tooltip();
+    $('#btnLoc').click(function (e) {
+        document.getElementById("TuNgay").addEventListener("change", function() {
+            let input = this.value;
+            let tungay = new Date(input);
+        });
+        document.getElementById("DenNgay").addEventListener("change", function() {
+            let input = this.value;
+            let denngay = new Date(input);
+        });
+
+        $.get('api/baocao/baoCaoChiTiet' + tungay,denngay,id, data => {
+            let arr = data.map(baocao => {
+                return ["", baocao.HangMuc, baocao.MoTa, baocao.LyDo, baocao.TenLoai, baocao.SoGhim, baocao.Name, baocao.Tien]
+            })
+            console.log(arr)
+            example.clear().rows.add(arr).draw();
+        });
+    })
+});
+

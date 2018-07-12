@@ -87,7 +87,7 @@ $(document).ready(function () {
 
     $.get('api/user/getAll', data => {
         let arr = data.map(user => {
-            return ["", user.ID, user.Name, user.DiaChi, user.Mail, user.Username, user.IsAdmin ? "Có" : "Không", user.NgaySinh, user.SoDienThoai, user.GioiTinh ? "Nam" : "Nữ", user.ThemDuAn ? "Có" : "Không"]
+            return ["", user.ID, user.Name, user.DiaChi, user.Mail, user.Username, user.IsAdmin ? "Có" : "Không", user.NgaySinh, user.SoDienThoai, user.GioiTinh ? "Nũ" : "Nam", user.ThemDuAn ? "Có" : "Không"]
         })
         console.log(arr)
         example.clear().rows.add(arr).draw();

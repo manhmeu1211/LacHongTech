@@ -190,7 +190,7 @@ router.post("/addWork", (req, res) => {
     let user = verifyToken(req.session.token);
     let type = req.body.type;
     if (type === 'add') {
-        if (!user.ThemDuAN) {
+        if (!user.ThemDuAn) {
             res.send({
                 Status: false,
                 Message: "Không có quyền thêm dự án"
@@ -212,7 +212,7 @@ router.post("/addWork", (req, res) => {
         }
     }
     else if (type === 'edit') {
-        if (!user.ThemDuAN) {
+        if (!user.ThemDuAn) {
             res.send({
                 Status: false,
                 Messgae: "Bạn không có quyền để chỉnh sửa công việc này!"
@@ -230,7 +230,7 @@ router.post("/addWork", (req, res) => {
 
 router.get('/gethangmuc/:id', (req, res) => {
     let user = verifyToken(req.session.token);
-    if (!user.ThemDuAN) {
+    if (!user.ThemDuAn) {
         res.send({
             Status: false,
             Message: "Không có quyền lấy",

@@ -97,9 +97,12 @@ app.get('/duan', (req, res) => {
         res.render('duan')
     });
 });
+app.get('/ghimByHangMuc', (req, res) => {
+    res.render('ghimByHangMuc')
+});
 app.get('/logout', (req, res) => {
-   req.session.token=null;
-   res.redirect('/')
+    req.session.token = null;
+    res.redirect('/')
 });
 app.get('/work', (req, res) => {
     const id = req.query.id;
@@ -161,7 +164,8 @@ app.post('/uploadExcelDuAn', upload, function (req, res, next) {
             NguoiThucHien: userOBJ[item[14]],
             TenDuAn: 1013
         }
-        addWork(work,()=>{})
+        addWork(work, () => {
+        })
     });
     res.send(users2)
 });

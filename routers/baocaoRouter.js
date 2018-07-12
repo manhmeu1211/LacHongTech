@@ -49,4 +49,18 @@ router.post('/baocaoththeongay', (req, res) => {
         })
     }
 });
+
+router.post('/baoCaoChiTiet', (req, res) =>{
+    let {TuNgay, DenNgay, ID} = req.body;
+    console.log(req.body)
+    let user = verifyToken(req.session.token);
+    if (!user) {
+        res.send("Null cmnr")
+    } else {
+        baoCaoChiTietGhim(TuNgay, DenNgay, ID, data => {
+            console.log(data)
+            res.send(data)
+        })
+    }
+});
 module.exports = router;
