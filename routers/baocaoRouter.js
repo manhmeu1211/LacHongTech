@@ -53,7 +53,7 @@ router.post('/baocaoththeongay', (req, res) => {
 router.post('/baoCaoChiTiet', (req, res) => {
     let {TuNgay, DenNgay, ID} = req.body;
     console.log(req.body)
-    let user = verifyToken(req.session.token) || verifyToken(req.session.token);
+    let user = verifyToken(req.session.token) || verifyToken(req.headers.token);
     if (!user) {
         res.send("Null cmnr")
     } else {
